@@ -16,3 +16,17 @@ yarn-error.log
 app/Console/Kernel.php
 
 config/
+
+artisan
+
+composer.json
+
+composer.lock
+
+package.json
+
+phpunit.xml
+
+README.md
+
+tests/Unit/ExampleTest.php
