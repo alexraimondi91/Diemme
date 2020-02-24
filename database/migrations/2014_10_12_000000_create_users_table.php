@@ -15,18 +15,22 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('surname');
-            $table->string('email')->unique();
+            $table->Increments('id');
+            $table->string('name',40);
+            $table->string('surname',60);
+            $table->string('email',40)->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('fiscalCode');
-            $table->string('address');
-            $table->string('country');
-            $table->timestamp('insertDate');
+            $table->string('password',100);
+            $table->string('fiscalCode',18);
+            $table->string('address',40);
+            $table->string('country',20);
+            $table->timestamp('insertDate')->nullable();
             $table->boolean('active');
+            $table->integer('group_id')->unsigned();
+            $table->foreign('group_id')->on('group')->references('id')
+            ->onDelete('cascade')->onUpdate('cascade');
             $table->rememberToken();           
+
         });
     }
 
