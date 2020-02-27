@@ -1,7 +1,7 @@
 # Diemme
-##Project
+## Project
 Master's project
 
-##Technology
+## Technology
 PHP - Laravel
 Mysql
