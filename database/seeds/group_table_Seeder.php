@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
 class group_table_Seeder extends Seeder
 {
@@ -14,11 +15,17 @@ class group_table_Seeder extends Seeder
      */
     public function run()
     {
-        User::truncate();
-        DB::table('group')->insert([
-            'name' => Str::random(10),
-            'role_id' => Str::random(10),
-            'created_at' => Carbon::now()
+        $ruoli = array('admin', 'designer','factory');
+
+        for($i=1; $i<= count($ruoli); $i++){   
+            DB::table('group')->insert([
+            'id'=> $i,
+            'name' => $ruoli[$i-1],
+            'role_id' => $i,
+            'created_at'=> Carbon::now(),
+            'updated_at'=>Carbon::now(),
         ]);
+        }
     }
 }
+

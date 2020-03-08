@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
 
 class users_table_Seeder extends Seeder
@@ -15,21 +16,22 @@ class users_table_Seeder extends Seeder
      */
     public function run()
     {
-        User::truncate();
-        DB::table('users')->insert([
+        for($i=0; $i<10;$i++)
+        {
+            DB::table('users')->insert([
             'name' => Str::random(10),
             'surname' => Str::random(10),
             'email' => Str::random(10).'gmail.com',
-            'email_verified_at ' => Carbon::now(),
             'password' => Hash::make('password'),
             'country' => Str::random(16),
             'fiscalCode' => Str::random(16),
             'address' => Str::random(16),
+            'email_verified_at' => Carbon::now(),
             'insertDate' => Carbon::now(),
-            'group_id' => rand(1,2),
-            'active' => 1,
-            'remember_token ' => Str::random(16)
-        ]);
+            'group_id' => rand(1,3),
+            'active' => 1
+        ]);}
+        
 
     }
 }

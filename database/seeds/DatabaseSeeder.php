@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,10 +16,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
          
-         $this->call([
+        $this->call([
+            role_table_Seeder::class,
+            group_table_Seeder::class,
             users_table_Seeder::class,
-            groupTableSeeder::class,
-            roleTableSeeder::class,
         ]);
     }
 }
