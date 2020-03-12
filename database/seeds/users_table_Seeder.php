@@ -16,9 +16,10 @@ class users_table_Seeder extends Seeder
      */
     public function run()
     {
-        for($i=0; $i<10;$i++)
+        for($i=1; $i<=10;$i++)
         {
             DB::table('users')->insert([
+            'id'=>$i,
             'name' => Str::random(10),
             'surname' => Str::random(10),
             'email' => Str::random(10).'gmail.com',
@@ -30,7 +31,8 @@ class users_table_Seeder extends Seeder
             'insertDate' => Carbon::now(),
             'group_id' => rand(1,3),
             'active' => 1
-        ]);}
+        ]);
+        }
         
 
     }

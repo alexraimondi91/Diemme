@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTecnologyShowcase extends Migration
+class CreateTechnologyShowcase extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTecnologyShowcase extends Migration
      */
     public function up()
     {
-        Schema::create('tecnology_showcase', function (Blueprint $table) {
+        Schema::create('technology_showcase', function (Blueprint $table) {
             $table->Increments('id');
             $table->string('name',20);
             $table->string('name_file',40);
@@ -33,6 +33,6 @@ class CreateTecnologyShowcase extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tecnology_showcase');
+        Schema::dropIfExists('technology_showcase');
     }
 }
