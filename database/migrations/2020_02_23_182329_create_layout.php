@@ -22,7 +22,7 @@ class CreateLayout extends Migration
             $table->text('description');
             $table->integer('user_id')->unsigned();;
             $table->foreign('user_id')->on('users')->references('id')
-            ->onDelete('cascade')->onUpdate('cascade');;
+            ->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

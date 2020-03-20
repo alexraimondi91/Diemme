@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('fiscalCode',18);
             $table->string('address',40);
             $table->string('country',20);
-            $table->timestamp('insertDate')->nullable();
+            $table->timestamps();
             $table->boolean('active');
             $table->integer('group_id')->unsigned();
             $table->foreign('group_id')->on('group')->references('id')

@@ -30,3 +30,7 @@ phpunit.xml
 README.md
 
 tests/Unit/ExampleTest.php
+
+.vscode/
+
+.DS_Store

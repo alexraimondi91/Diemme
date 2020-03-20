@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/ciao', function () {
-    return view('welcome');
-});
+/* Route::get('/', function () {
+    return view('index');
+}); */
+
+Route::get('/', 'IndexController@show');

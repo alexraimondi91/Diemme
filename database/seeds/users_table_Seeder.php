@@ -28,9 +28,10 @@ class users_table_Seeder extends Seeder
             'fiscalCode' => Str::random(16),
             'address' => Str::random(16),
             'email_verified_at' => Carbon::now(),
-            'insertDate' => Carbon::now(),
             'group_id' => rand(1,3),
-            'active' => 1
+            'active' => 1,
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
         ]);
         }
         
