@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\models\Index;
+use App\models\Tecnologie;
 use Illuminate\Http\Request;
 
-class IndexController extends Controller
+class TecnologieController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,22 +41,22 @@ class IndexController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\models\Index  $index
+     * @param  \App\models\Tecnologie  $tecnologie
      * @return \Illuminate\Http\Response
      */
-    public function show(Index $index)
+    public function show(Tecnologie $tecnologie)
     {
-        $collection = $index::all();
-        return view('/frontoffice/home/home',['collection' => $collection]);
+        $collection = $tecnologie::all();
+        return view('/frontoffice/tecnologie/tecnologie',['collection' => $collection]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\models\Index  $index
+     * @param  \App\models\Tecnologie  $tecnologie
      * @return \Illuminate\Http\Response
      */
-    public function edit(Index $index)
+    public function edit(Tecnologie $tecnologie)
     {
         //
     }
@@ -65,10 +65,10 @@ class IndexController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\models\Index  $index
+     * @param  \App\models\Tecnologie  $tecnologie
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Index $index)
+    public function update(Request $request, Tecnologie $tecnologie)
     {
         //
     }
@@ -76,10 +76,10 @@ class IndexController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\models\Index  $index
+     * @param  \App\models\Tecnologie  $tecnologie
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Index $index)
+    public function destroy(Tecnologie $tecnologie)
     {
         //
     }

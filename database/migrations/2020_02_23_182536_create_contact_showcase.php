@@ -18,10 +18,13 @@ class CreateContactShowcase extends Migration
             $table->string('name',20);
             $table->text('text');
             $table->string('email',40)->unique();
-            $table->string('object',40);
+            $table->string('region',40);
+            $table->string('nation',40);
+            $table->string('number');
+            $table->string('street');
             $table->text('info');
-            $table->bigInteger('lat');
-            $table->bigInteger('long');
+            $table->string('lat');
+            $table->string('long');
             $table->integer('user_id')->unsigned();;
             $table->foreign('user_id')->on('users')->references('id')
             ->onDelete('cascade')->onUpdate('cascade');;

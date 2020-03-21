@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\models\Index;
+use App\models\Preventivi;
 use Illuminate\Http\Request;
 
-class IndexController extends Controller
+class PreventiviController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,22 +41,22 @@ class IndexController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\models\Index  $index
+     * @param  \App\models\Preventivi  $preventivi
      * @return \Illuminate\Http\Response
      */
-    public function show(Index $index)
+    public function show(Preventivi $preventivi)
     {
-        $collection = $index::all();
-        return view('/frontoffice/home/home',['collection' => $collection]);
+        $collection = $preventivi::all();
+        return view('/frontoffice/preventivi/preventivi',['collection' => $collection]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\models\Index  $index
+     * @param  \App\models\Preventivi  $preventivi
      * @return \Illuminate\Http\Response
      */
-    public function edit(Index $index)
+    public function edit(Preventivi $preventivi)
     {
         //
     }
@@ -65,10 +65,10 @@ class IndexController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\models\Index  $index
+     * @param  \App\models\Preventivi  $preventivi
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Index $index)
+    public function update(Request $request, Preventivi $preventivi)
     {
         //
     }
@@ -76,10 +76,10 @@ class IndexController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\models\Index  $index
+     * @param  \App\models\Preventivi  $preventivi
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Index $index)
+    public function destroy(Preventivi $preventivi)
     {
         //
     }

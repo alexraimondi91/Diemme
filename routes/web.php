@@ -16,3 +16,13 @@
 }); */
 
 Route::get('/', 'IndexController@show');
+
+Route::get('/prodotti', 'ProdottiController@show');
+
+Route::get('/tecnologie', 'TecnologieController@show');
+
+Route::get('/preventivi', 'PreventiviController@show');
+
+Route::get('/contatti', 'ContattiController@show');
+
+

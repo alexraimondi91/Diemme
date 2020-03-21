@@ -19,7 +19,7 @@ class news_showcase_table_Seeder extends Seeder
             DB::table('news_showcase')->insert([
                 'name_file'=> Str::random(10),
                 'name'=>Str::random(10),
-                'path'=>"/Storage/img/news_showcase/1.jpg",
+                'path'=>"/storage/img/news_showcase/1.jpg",
                 'description'=>Str::random(100),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),

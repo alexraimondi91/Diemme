@@ -18,8 +18,8 @@ class tecnology_showcase_table_Seeder extends Seeder
             DB::table('technology_showcase')->insert([
                 'name' => Str::random(10),
                 'name_file' => Str::random(10),
-                'path' => 'Storage/img/technology_showcase/1.jpg',
-                'description' => Str::random(100),
+                'path'=>'Storage/img/technology_showcase/1.jpg',
+                'description' => Str::random(10),
                 'user_id' => rand(1, 10),
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
