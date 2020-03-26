@@ -22,12 +22,11 @@ class CreateContactShowcase extends Migration
             $table->string('nation',40);
             $table->string('number');
             $table->string('street');
-            $table->text('info');
             $table->string('lat');
             $table->string('long');
-            $table->integer('user_id')->unsigned();;
+            $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->on('users')->references('id')
-            ->onDelete('cascade')->onUpdate('cascade');;
+            ->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

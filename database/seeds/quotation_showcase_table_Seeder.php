@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Faker\Generator as Faker;
 
 class quotation_showcase_table_Seeder extends Seeder
 {
@@ -11,11 +12,11 @@ class quotation_showcase_table_Seeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
         DB::table('quotation_showcase')->insert([
             'name'=> Str::random(10),
-            'description'=>Str::random(100),
+            'description'=> $faker->text(),
             'user_id'=>rand(1,10)
         ]);
     }

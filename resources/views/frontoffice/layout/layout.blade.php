@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Diemme</title>
-    <meta name=”keywords” content="abbigliamento, personalizzato, bici, ciclismo, Triathlon, sport"> 
+    <meta name=”keywords” content="abbigliamento, personalizzato, bici, ciclismo, Triathlon, sport">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- <link rel="manifest" href="site.webmanifest"> -->
@@ -13,17 +13,18 @@
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/themify-icons.css">
-    <link rel="stylesheet" href="css/nice-select.css">
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/animate.css">
-    <link rel="stylesheet" href="css/slicknav.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="{{ URL::asset('css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/themify-icons.cs') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/nice-select.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/flaticon.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/animate.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/slicknav.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/style.css') }}">
     <!-- <link rel="stylesheet" href="css/responsive.css"> -->
 </head>
 
@@ -40,8 +41,8 @@
                     <div class="row align-items-center justify-content-between no-gutters">
                         <div class="col-xl-2 col-lg-2">
                             <div class="logo-img">
-                                <a href="index.html">
-                                    <img src="img/logo.png" alt="">
+                                <a href="/">
+                                    <img src="{{ URL::asset('img/logo.png') }}" alt="">
                                 </a>
                             </div>
                         </div>
@@ -49,16 +50,26 @@
                             <div class="main-menu  d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a href="/">Home</a></li>
-                                        <li><a href="/prodotti">Prodotti</a></li>
-                                        <li><a href="/tecnologie">Tecnologie</a></li>
-                                        <li><a href="/preventivi">Preventivi</a></li>
-                                        <li><a href="/contatti">Contatti</a></li>
+                                        <li><a href="{{route('index')}}">Home</a></li>
+                                        <li><a href="{{route('news.index')}}">News</a></li>
+                                        <li><a href="{{route('prodotti')}}">Prodotti</a></li>
+                                        <li><a href="{{route('tecnologie')}}">Tecnologie</a></li>
+                                        <li><a href="{{route('preventivi')}}">Preventivi</a></li>
+                                        <li><a href="{{route('contatti')}}">Contatti</a></li>
                                     </ul>
                                 </nav>
                             </div>
                         </div>
-
+                        @auth
+                        <div class="get_in_tauch">
+                            <a href="#" class="boxed-btn">Pannello</a>
+                        </div>
+                        @endauth
+                        @guest
+                        <div class="get_in_tauch">
+                            <a href="#" class="boxed-btn">Accedi</a>
+                        </div>
+                        @endguest
                         <div class="col-12">
                             <div class="mobile_menu d-block d-lg-none"></div>
                         </div>
@@ -69,9 +80,9 @@
     </header>
     <!-- header-end -->
 
-@yield('content')
-<!-- footer_start -->
- <footer class="footer" style="background-image: linear-gradient(black,#1F1F1F)">
+    @yield('content')
+    <!-- footer_start -->
+    <footer class="footer" style="background-image: linear-gradient(black,#1F1F1F)">
         <div class="footer_top">
             <div class="container-fluid p-0">
                 <div class="row no-gutters ">
@@ -79,10 +90,12 @@
                         <div class="footer_widget">
                             <ul class="social_links">
                                 <li>
-                                    <a href="https://www.facebook.com/technicalclothing/"><i class="fa fa-facebook"></i></a>
+                                    <a href="https://www.facebook.com/technicalclothing/"><i
+                                            class="fa fa-facebook"></i></a>
                                 </li>
                                 <li>
-                                    <a href="https://www.instagram.com/diemme_abbigliamento/"><i class="fa fa-instagram"></i></a>
+                                    <a href="https://www.instagram.com/diemme_abbigliamento/"><i
+                                            class="fa fa-instagram"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -90,7 +103,7 @@
                     <div class="col-xl-9 col-12 col-md-8">
                         <div class="footer_header d-flex justify-content-between">
                             <div class="footer_header_left">
-                                <h3>Hai domandande?</h3>
+                                <h3>Hai domande?</h3>
                                 <p>Contattaci siamo a tua disposizione</p>
                             </div>
                             <div class="footer_btn">
@@ -102,40 +115,54 @@
             </div>
         </div>
         <div class="footer_copy_right">
-            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p><p>Sviluppato e ideato da Alessandro Sallese</p>
+            <p>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;<script>
+                    document.write(new Date().getFullYear());
+                </script> All rights reserved | This template is made with <i class="fa fa-heart-o"
+                    aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+            <p>Sviluppato e ideato da Alessandro Sallese</p>
         </div>
-    </footer>    
+    </footer>
     <!-- footer_end -->
 
     <!-- JS here -->
-    <script src="js/vendor/modernizr-3.5.0.min.js"></script>
-    <script src="js/vendor/jquery-1.12.4.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/isotope.pkgd.min.js"></script>
-    <script src="js/ajax-form.js"></script>
-    <script src="js/waypoints.min.js"></script>
-    <script src="js/jquery.counterup.min.js"></script>
-    <script src="js/imagesloaded.pkgd.min.js"></script>
-    <script src="js/scrollIt.js"></script>
-    <script src="js/jquery.scrollUp.min.js"></script>
-    <script src="js/wow.min.js"></script>
-    <script src="js/nice-select.min.js"></script>
-    <script src="js/jquery.slicknav.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/plugins.js"></script>
+    <script src="{{ URL::asset('js/vendor/modernizr-3.5.0.min.js') }}"></script>
+    <script src="{{ URL::asset('js/vendor/jquery-1.12.4.min.js') }}"></script>
+    <script src="{{ URL::asset('js/popper.min.js') }}"></script>
+    <script src="{{ URL::asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ URL::asset('js/owl.carousel.min.js') }}"></script>
+    <script src="{{ URL::asset('js/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ URL::asset('js/ajax-form.js') }}"></script>
+    <script src="{{ URL::asset('js/waypoints.min.js') }}"></script>
+    <script src="{{ URL::asset('js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ URL::asset('js/imagesloaded.pkgd.min.js') }}"></script>
+    <script src="{{ URL::asset('js/scrollIt.js') }}"></script>
+    <script src="{{ URL::asset('js/jquery.scrollUp.min.js') }}"></script>
+    <script src="{{ URL::asset('js/wow.min.js') }}"></script>
+    <script src="{{ URL::asset('js/nice-select.min.js') }}"></script>
+    <script src="{{ URL::asset('js/jquery.slicknav.min.js') }}"></script>
+    <script src="{{ URL::asset('js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ URL::asset('js/plugins.js') }}"></script>
 
     <!--contact js-->
-    <script src="js/contact.js"></script>
-    <script src="js/jquery.ajaxchimp.min.js"></script>
-    <script src="js/jquery.form.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
-    <script src="js/mail-script.js"></script>
+    <script src="{{ URL::asset('js/contact.js') }}"></script>
+    <script src="{{ URL::asset('js/jquery.ajaxchimp.min.js') }}"></script>
+    <script src="{{ URL::asset('js/jquery.form.js') }}"></script>
+    <script src="{{ URL::asset('js/jquery.validate.min.js') }}"></script>
+    <script src="{{ URL::asset('js/mail-script.js') }}"></script>
 
-    <script src="js/main.js"></script>
+    <script src="{{ URL::asset('js/main.js') }}"></script>
+
+
+
+    <!-- Start cookieyes banner -->
+    <script id="cookieyes" type="text/javascript"
+        src="https://app.cookieyes.com/client_data/d417c2c353f0b0ee7f8e74f0.js"></script>
+    <!-- End cookieyes banner -->
+
 
 </body>
 

@@ -3,84 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\models\Index;
-use Illuminate\Http\Request;
+use App\models\Contact;
+
 
 class IndexController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
-     *
+     *@param \App\models\Contact $contact
      * @param  \App\models\Index  $index
      * @return \Illuminate\Http\Response
      */
-    public function show(Index $index)
+    public function index(Index $index,Contact $contact)
     {
-        $collection = $index::all();
-        return view('/frontoffice/home/home',['collection' => $collection]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\models\Index  $index
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Index $index)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\models\Index  $index
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Index $index)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\models\Index  $index
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Index $index)
-    {
-        //
+        //$collection = $index::all();
+        $collection = $index->orderBy('created_at')
+            ->limit(4)->get();
+        $about = $contact->all();
+        return view('/frontoffice/home/home', ['collection' => $collection,'about'=>$about]);
     }
 }

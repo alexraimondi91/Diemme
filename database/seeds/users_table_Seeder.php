@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
+use Faker\Generator as Faker;
 
 
 class users_table_Seeder extends Seeder
@@ -14,19 +15,19 @@ class users_table_Seeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
         for($i=1; $i<=10;$i++)
         {
             DB::table('users')->insert([
             'id'=>$i,
-            'name' => Str::random(10),
-            'surname' => Str::random(10),
-            'email' => Str::random(10).'gmail.com',
+            'name_user' => $faker->name(),
+            'surname_user' => Str::random(10),
+            'email_user' => $faker->email(),
             'password' => Hash::make('password'),
-            'country' => Str::random(16),
-            'fiscalCode' => Str::random(16),
-            'address' => Str::random(16),
+            'country_user' => Str::random(16),
+            'fiscalCode_user' => Str::random(16),
+            'address_user' => $faker->address(),
             'email_verified_at' => Carbon::now(),
             'group_id' => rand(1,3),
             'active' => 1,

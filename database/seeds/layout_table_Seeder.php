@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
+use Faker\Generator as Faker;
 
 class layout_table_Seeder extends Seeder
 {
@@ -12,7 +13,7 @@ class layout_table_Seeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
         //
         DB::table('layout')->insert([
@@ -20,7 +21,7 @@ class layout_table_Seeder extends Seeder
             'final'=> 0,
             'name_file'=> Str::random(10),
             'path'=> '/storage/img/layout/1.jpg',
-            'description'=> Str::random(100),
+            'description'=> $faker->text(),
             'user_id'=> rand(1,9),
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
