@@ -43,8 +43,11 @@ class NewsController extends Controller
      */
     public function showSingle($id, Index $index, User $user)
     {
-        $collection = $index->find($id);
-        $user = $collection->$user;
-        return view('/frontoffice/news/singola/singola', ['collection' => $collection, 'user' => $user]);
+        //$collection = $index->find($id);
+        //$user = $collection->$user;
+        //return view('/frontoffice/news/singola/singola', ['collection' => $collection, 'user' => $user]);
+        $id = preg_replace( '/[^0-9]/', '', $id );
+        $collection = $index->with('user')->find(1);
+        return view('/frontoffice/news/singola/singola', ['collection' => $collection]);
     }
 }
