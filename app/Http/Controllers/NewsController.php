@@ -29,6 +29,9 @@ class NewsController extends Controller
     public function show_filter(Request $request, Index $index)
     {
         $filter = $request->input('filter');
+        $filter = preg_replace( '/^[a-z0-9_-]{1,60}$/', '', $filter);
+        if ($filter == '')
+            $filter = 1;
         $collection = $index->where('name', $filter)
             ->orWhere('name', 'like', '%' . $filter . '%')->paginate(4);
         return view('/frontoffice/news/multi/multi', ['collection' => $collection]);
@@ -47,7 +50,9 @@ class NewsController extends Controller
         //$user = $collection->$user;
         //return view('/frontoffice/news/singola/singola', ['collection' => $collection, 'user' => $user]);
         $id = preg_replace( '/[^0-9]/', '', $id );
-        $collection = $index->with('user')->find(1);
+        if ($id == '')
+            $id = 1;
+        $collection = $index->with('user')->find($id);
         return view('/frontoffice/news/singola/singola', ['collection' => $collection]);
     }
 }
