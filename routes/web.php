@@ -15,8 +15,6 @@
     return view('index');
 }); */
 
-
-
 Route::get('/', 'IndexController@index')->name('index');
 
 Route::get('/prodotti', 'ProductController@index')->name('prodotti');
@@ -34,3 +32,7 @@ Route::get('/news', 'NewsController@index')->name('news.index');
 Route::get('/news/{id}', 'NewsController@showSingle')->name('news.id');
 
 Route::post('/filtro', 'NewsController@show_filter')->name('news.filter');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

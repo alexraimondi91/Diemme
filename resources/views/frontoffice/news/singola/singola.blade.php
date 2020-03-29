@@ -10,7 +10,7 @@
          <h2>{{$collection->name}}
          </h2>
          <ul class="blog-info-link mt-3 mb-4">
-            <li><i class="fa fa-user">{{$collection->user->name_user}}</i></li>
+            <li><i class="fa fa-user">{{$collection->user->name_user}}  {{$collection->user->surname_user}}</i></li>
          </ul>
          <p class="excert">
             {{$collection->description}}

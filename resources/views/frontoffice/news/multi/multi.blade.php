@@ -7,8 +7,8 @@
         <article class="blog_item">
             <div class="blog_item_img">
                 <img class="card-img rounded-0" src="{{$item->path}}" alt="">
-            <a href="news/{{$item->id}}" class="blog_item_date">
-                    <h3>{{$item->created_at}}</h3>
+            <a href="{{route('news.id', $item->id)}}" class="blog_item_date">
+                    <h3>{{$item->created_at->diffForHumans()}}</h3>
                 </a>
             </div>
 

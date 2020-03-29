@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="slider_text text-center">
-                            <a href="/news/{{$item->id}}">
+                            <a href="{{route('news.id', $item->id)}}">
                                 <h3>{{$item->name}}</h3>
                             </a>
                         </div>
