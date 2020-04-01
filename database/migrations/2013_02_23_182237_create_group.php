@@ -14,12 +14,13 @@ class CreateGroup extends Migration
     public function up()
     {
         Schema::create('group', function (Blueprint $table) {
-            $table->Increments('id');
+            $table->integer('id_user')->unsigned();
             $table->string('name',20);
             $table->integer('role_id')->unsigned();
             $table->foreign('role_id')->on('role')->references('id')
             ->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
+            $table->unique(['id_user', 'role_id']);
         });
     }
 

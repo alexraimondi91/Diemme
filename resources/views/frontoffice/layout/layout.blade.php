@@ -67,7 +67,7 @@
                         @endauth
                         @guest
                         <div class="get_in_tauch">
-                            <a href="#" class="boxed-btn">Accedi</a>
+                            <a href="{{ route('login') }}" class="boxed-btn">Accedi</a>
                         </div>
                         @endguest
                         <div class="col-12">

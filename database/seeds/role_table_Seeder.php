@@ -16,7 +16,7 @@ class role_table_Seeder extends Seeder
      */
     public function run()
     {
-        $ruoli = array("privilege","add_news","add_product","add_technology");
+        $ruoli = array("privilege","showcase_news","showcase_product","showcase_technology","show_contact");
         for($i=1; $i<= count($ruoli); $i++){
         {
             DB::table('role')->insert([

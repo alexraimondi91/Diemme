@@ -33,6 +33,8 @@ Route::get('/news/{id}', 'NewsController@showSingle')->name('news.id');
 
 Route::post('/filtro', 'NewsController@show_filter')->name('news.filter');
 
+Route::get('/login', 'LoginController@index')->name('login');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

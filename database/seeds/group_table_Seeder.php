@@ -15,11 +15,11 @@ class group_table_Seeder extends Seeder
      */
     public function run()
     {
-        $ruoli = array('admin', 'designer','factory');
+        $ruoli = array('admin', 'publisher','designer','user_1');
 
         for($i=1; $i<= count($ruoli); $i++){   
             DB::table('group')->insert([
-            'id'=> $i,
+            'id_user'=> $i,
             'name' => $ruoli[$i-1],
             'role_id' => $i,
             'created_at'=> Carbon::now(),

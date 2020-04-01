@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->boolean('active');
             $table->integer('group_id')->unsigned();
-            $table->foreign('group_id')->on('group')->references('id')
+            $table->foreign('group_id')->on('group')->references('id_user')
             ->onDelete('cascade')->onUpdate('cascade');
             $table->rememberToken();           
 
