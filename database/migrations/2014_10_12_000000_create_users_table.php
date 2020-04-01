@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->Increments('id');
             $table->string('name_user',40);
             $table->string('surname_user',60);
-            $table->string('email_user',40)->unique();
+            $table->string('email',40)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password',100);
             $table->string('fiscalCode_user',18);
