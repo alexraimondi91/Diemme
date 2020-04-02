@@ -49,10 +49,10 @@
             <!-- /.social-auth-links -->
 
             <p class="mb-1">
-                <a href="forgot-password.html">Ho dimenticato la mia password</a>
+            <a href="{{route('password.request')}}">Ho dimenticato la mia password</a>
             </p>
             <p class="mb-0">
-                <a href="register.html" class="text-center">Registrami</a>
+            <a href="{{route('register')}}" class="text-center">Registrami</a>
             </p>
         </div>
         <!-- /.login-card-body -->
