@@ -1,49 +1,48 @@
-@extends('layouts.app')
+@extends('auth/layout/layout')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Confirm Password') }}</div>
 
-                <div class="card-body">
-                    {{ __('Please confirm your password before continuing.') }}
-
-                    <form method="POST" action="{{ route('password.confirm') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="{{route('index')}}"><b>Diemme</b></a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Conferma password prima di continuare</p>
+                <form action="{{ route('password.confirm') }}" method="post">
+                    @csrf
+                    <div class="input-group mb-3">
+                        <input type="email"
+                            class="form-control @error('email') is-invalid @error('password') is-invalid @enderror"
+                            name="password" required autocomplete="current-password">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
                             </div>
                         </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Confirm Password') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
+                        @error('password')
+                        <span id="exampleInputEmail1-error" class="error invalid-feedback">
+                            {{$message}}
+                        </span>
+                        @enderror
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block">Conferma password</button>
+                            @if (Route::has('password.request'))
+                            <a class="btn btn-link" href="{{ route('password.request') }}">
+                                Password dimentica
+                            </a>
+                            @endif
                         </div>
-                    </form>
-                </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
             </div>
+            <!-- /.login-card-body -->
         </div>
     </div>
-</div>
-@endsection
+    <!-- /.login-box -->
+    @endsection

@@ -1,28 +1,33 @@
-@extends('layouts.app')
+@extends('auth/layout/layout')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
-
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
-                    @endif
-
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
-                    </form>
-                </div>
+<body class="hold-transition login-page">
+    <div class="login-box">
+      <div class="login-logo">
+        <a href="{{route('index')}}"><b>Diemme</b></a>
+      </div>
+      <!-- /.login-logo -->
+      <div class="card">
+        <div class="card-body login-card-body">
+          <p class="login-box-msg">Verifica la tua email</p>
+          @if (session('resent'))
+          <div class="alert alert-success" role="alert">
+              Un link di verifica è stata inviata alla tua casella email
+          </div>
+          @endif
+          <p>Prima di provcedere, per favore verifica la tua casella email per il link di verifica</p>
+          <p>Se non hai ricevuto la email provedi</p>
+          <form action="{{ route('verification.resend') }}" method="post">
+            @csrf
+            <div class="row">
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-block">Effettua nuovamente la richiesta</button>
+              </div>
+              <!-- /.col -->
             </div>
-        </div>
+          </form>
+        <!-- /.login-card-body -->
+      </div>
     </div>
-</div>
+    <!-- /.login-box -->
 @endsection
