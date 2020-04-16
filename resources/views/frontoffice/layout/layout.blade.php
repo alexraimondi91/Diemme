@@ -62,7 +62,7 @@
                         </div>
                         @auth
                         <div class="get_in_tauch">
-                            <a href="#" class="boxed-btn">Pannello</a>
+                        <a href="{{route('dashboard')}}" class="boxed-btn">Pannello</a>
                         </div>
                         @endauth
                         @guest

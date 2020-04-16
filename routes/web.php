@@ -37,4 +37,3 @@ Route::get('/login', 'LoginController@index')->name('login');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');

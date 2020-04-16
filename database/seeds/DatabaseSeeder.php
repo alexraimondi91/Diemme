@@ -17,8 +17,9 @@ class DatabaseSeeder extends Seeder
     {
          
         $this->call([
-            role_table_Seeder::class,
+            service_table_Seeder::class,
             group_table_Seeder::class,
+            service_group_table_Seeder::class,
             users_table_Seeder::class,
             layout_table_Seeder::class,
             product_showcase_table_Seeder::class,

@@ -19,9 +19,8 @@ class group_table_Seeder extends Seeder
 
         for($i=1; $i<= count($ruoli); $i++){   
             DB::table('group')->insert([
-            'id_user'=> $i,
+            'id'=> $i,
             'name' => $ruoli[$i-1],
-            'role_id' => $i,
             'created_at'=> Carbon::now(),
             'updated_at'=>Carbon::now(),
         ]);

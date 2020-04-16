@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\models\auth\Group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -13,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+       
     }
 
     /**
@@ -23,6 +25,21 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        foreach(Auth::user()->serviceHave() as $item)
+        switch($item['name']){
+            case 'privilege_dashboard': 
+                return view('backoffice/dashboard/dashboardPrivilege');
+            case 'client_dashboard': 
+                return view('backoffice/dashboard/dashboardClient');
+            default: 
+                return view('backoffice/dashboard/dashboard');
+        }
     }
+
+    // public function show_auth(Group $group){
+    //     //$group_id =  ;
+    //     //return $group->find(Auth::user()->group_id)->services()->get();
+    //     return Auth::user()->serviceHave();
+    // }
+
 }

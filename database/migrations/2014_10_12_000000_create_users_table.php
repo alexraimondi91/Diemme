@@ -26,10 +26,11 @@ class CreateUsersTable extends Migration
             $table->string('country_user',60);
             $table->timestamps();
             $table->boolean('active');
+            $table->rememberToken();
             $table->integer('group_id')->unsigned();
-            $table->foreign('group_id')->on('group')->references('id_user')
-            ->onDelete('cascade')->onUpdate('cascade');
-            $table->rememberToken();           
+            $table->foreign('group_id')->on('group')->references('id')
+            ->onDelete('cascade')->onUpdate('cascade');    
+            $table->softDeletes();       
 
         });
     }

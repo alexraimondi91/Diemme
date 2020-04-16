@@ -22,7 +22,8 @@ class CreateNewsShowcase extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->timestamps();
             $table->foreign('user_id')->on('users')->references('id')
-            ->onDelete('cascade')->onUpdate('cascade');;
+            ->onDelete('cascade')->onUpdate('cascade');
+            $table->softDeletes();
         });
     }
 

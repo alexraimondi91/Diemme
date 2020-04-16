@@ -16,7 +16,6 @@
                 <a class="d-inline-block" href="news/{{$item->id}}">
                     <h2>{{$item->name}}</h2>
                 </a>
-                <p>{{$item->description}}</p>
             </div>
         </article>
         @endforeach

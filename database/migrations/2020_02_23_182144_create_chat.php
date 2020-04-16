@@ -21,6 +21,7 @@ class CreateChat extends Migration
             $table->foreign('user_chat_id')->on('user_chat')->references('id')
             ->onDelete('cascade')->onUpdate('cascade');;
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

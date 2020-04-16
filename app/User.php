@@ -2,13 +2,16 @@
 
 namespace App;
 
+use App\models\auth\Group;
 use App\models\Index;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+    use SoftDeletes;
     use Notifiable;
     protected $table = 'users';
 
@@ -38,4 +41,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class,'group_id','id');
+    }
+
+    public function serviceHave(){
+        return Group::find($this->group_id)->services()->get();
+    }
 }

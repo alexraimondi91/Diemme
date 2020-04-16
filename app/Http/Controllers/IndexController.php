@@ -18,7 +18,7 @@ class IndexController extends Controller
     public function index(Index $index,Contact $contact)
     {
         //$collection = $index::all();
-        $collection = $index->orderBy('created_at')
+        $collection = $index->orderBy('created_at','desc')
             ->limit(4)->get();
         $about = $contact->all();
         return view('/frontoffice/home/home', ['collection' => $collection,'about'=>$about]);

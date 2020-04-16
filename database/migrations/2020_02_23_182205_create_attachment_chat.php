@@ -21,6 +21,7 @@ class CreateAttachmentChat extends Migration
             $table->foreign('chat_id')->on('chat')->references('id')
             ->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

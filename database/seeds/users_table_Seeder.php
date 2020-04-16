@@ -23,7 +23,7 @@ class users_table_Seeder extends Seeder
             'id'=>$i,
             'name_user' => $faker->name(),
             'surname_user' => Str::random(10),
-            'email_user' => $faker->email(),
+            'email' => $faker->email(),
             'password' => Hash::make('password'),
             'country_user' => Str::random(16),
             'fiscalCode_user' => Str::random(16),

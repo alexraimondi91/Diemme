@@ -23,6 +23,7 @@ class CreateTechnologyShowcase extends Migration
             $table->foreign('user_id')->on('users')->references('id')
             ->onDelete('cascade')->onUpdate('cascade');;
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
