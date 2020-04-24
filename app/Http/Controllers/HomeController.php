@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\models\auth\Group;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller

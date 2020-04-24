@@ -7,8 +7,23 @@ use App\models\Index;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 
+
 class NewsController extends Controller
 {
+
+    protected $rules = [
+        'title' => 'required|max:255',
+    ];
+
+    protected $rules_delete = [
+        'id' => 'required',
+    ];
+
+    protected $errorMessages = [
+        'title.required' => 'Il campo Titolo è obbligatorio',
+    ];
+
+
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +36,34 @@ class NewsController extends Controller
         return view('/frontoffice/news/multi/multi', ['collection' => $collection]);
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \App\models\Index  $index
+     * @return \Illuminate\Http\Response
+     */
+    public function manage(Index $index)
+    {
+        $collection = $index->orderBy('created_at', 'desc')->paginate(10);
+        return view('backoffice.newsDashboard.manage', ['collection' => $collection]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\models\Index  $index
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, Index $index)
+    {
+        $request->validate($this->rules_delete);
+        $index = $index->find((int)$request->id);
+        if(isset($index->id))
+            $index->delete(); 
+        return redirect(route('manageNews'));
+
+    }
+    
     /**
      * Display the specified resource.
      * @param  \Illuminate\Http\Request  $request
@@ -66,12 +109,12 @@ class NewsController extends Controller
     public function store(Request $request)
     {
 
-        $this->validate($request, [
-            'principalImage' => ['required','max:1024'],
-            'summernoteInput' => ['required','max:10240'],
-            'title' => 'required',
-        ]);
-
+        //  $this->validate($request, [
+        //      'principalImage' => ['required','max:1024'],
+        //      'summernoteInput' => ['required','max:10240'],
+        //      'title' => 'required',
+        //  ]);
+        $this->validate($request, $this->rules);
         $detail = $request->summernoteInput;
         $dom = new \domdocument();
         $dom->loadHtml($detail, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
@@ -87,7 +130,7 @@ class NewsController extends Controller
                 list($type, $data) = explode(';', $data);
                 list(, $data)      = explode(',', $data);
                 $data = base64_decode($data);
-                $image_name = time() . $k . '.png';
+                $image_name = time() . $k . '.jpg';
                 $path = public_path() . '/storage/news/' . Auth::user()->id . '-' . $image_name;
                 file_put_contents($path, $data);
                 $img->removeattribute('src');
@@ -103,13 +146,14 @@ class NewsController extends Controller
         if ($request->hasFile('principalImage')) {
             if ($request->file('principalImage')->isValid()) {
                 $dir = 'public/img/news_showcase/';
-                $image_name = time() . '.jpg';
+                $image_name = time().date('Y-m-d'). '.jpg';
                 if ($request->principalImage->storeAs($dir, Auth::user()->id . $image_name)) {
                     $news->path = '/storage/img/news_showcase/' . Auth::user()->id . $image_name;
                     $news->save();
                     return view('backoffice.newsDashboard.create', ['success' => 1]);
-                }
+                } else return view('backoffice.newsDashboard.create', ['warning' => 1]);
             }
+            else return view('backoffice.newsDashboard.create', ['warning' => 1]);
         }
         return view('backoffice.newsDashboard.create', ['warning' => 1]);
     }

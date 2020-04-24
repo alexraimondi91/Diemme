@@ -53,8 +53,8 @@
             </form>
 
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-users mr-2"></i> Account
+            <a href="{{route('profile')}}" class="dropdown-item">
+              <i class="fas fa-users mr-2"></i> Profile
             </a>
           </div>
         </li>
@@ -77,7 +77,9 @@
 
   <!-- REQUIRED SCRIPTS -->
   <!-- jQuery -->
-  <script src="{{ URL::asset('backoffice/plugins/jquery/jquery.min.js') }}"></script>
+  <script src="https://code.jquery.com/jquery-3.5.0.min.js"
+    integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous">
+  </script>
   <!-- Bootstrap -->
   <script src="{{ URL::asset('backoffice/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <!-- overlayScrollbars -->
@@ -88,17 +90,6 @@
   <!-- OPTIONAL SCRIPTS -->
   <script src="{{ URL::asset('backoffice/dist/js/demo.js') }}"></script>
 
-  <!-- PAGE PLUGINS -->
-  <!-- jQuery Mapael -->
-  <script src="{{ URL::asset('backoffice/plugins/jquery-mousewheel/jquery.mousewheel.js') }}"></script>
-  <script src="{{ URL::asset('backoffice/plugins/raphael/raphael.min.js') }}"></script>
-  <script src="{{ URL::asset('backoffice/plugins/jquery-mapael/jquery.mapael.min.js') }}"></script>
-  <script src="{{ URL::asset('backoffice/plugins/jquery-mapael/maps/usa_states.min.js') }}"></script>
-  <!-- ChartJS -->
-  <script src="{{ URL::asset('backoffice/plugins/chart.js/Chart.min.js') }}"></script>
-
-  <!-- PAGE SCRIPTS -->
-  <script src="{{ URL::asset('backoffice/dist/js/pages/dashboard2.js') }}"></script>
   <!-- Summernote -->
   <script src="{{ URL::asset('backoffice/plugins/summernote/summernote-bs4.min.js') }}"></script>
   <script>
@@ -106,7 +97,6 @@
     // Summernote
     $('.textarea').summernote()
   })
-  </script>
 </body>
 
 </html>

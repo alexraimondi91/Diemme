@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\Schema;
 
 class CreateLayout extends Migration
@@ -16,9 +17,8 @@ class CreateLayout extends Migration
         Schema::create('layout', function (Blueprint $table) {
             $table->Increments('id');
             $table->string('name',20);
-            $table->boolean('final');
-            $table->string('name_file',40);
-            $table->string('path',60);
+            $table->boolean('status');
+            $table->json('path')->default(new Expression('(JSON_ARRAY())'));
             $table->text('description');
             $table->integer('user_id')->unsigned();;
             $table->foreign('user_id')->on('users')->references('id')

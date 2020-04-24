@@ -82,6 +82,33 @@
           </ul>
         </li>
         @endif
+        @if ($item['name'] == 'showcase_quotation' ?? '')
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-project-diagram"></i>
+            <p>
+              Istruzione Preventivi
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{route('createQuotation')}}" 
+                class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Aggiungi istruzione</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('manageQuotation')}}"
+                class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Gestione istruzioni</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        @endif
         @if ($item['name'] == 'showcase_news' ?? '')
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
@@ -93,17 +120,15 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-            <a href="{{route('createNews')}}"
-                class="nav-link">
+              <a href="{{route('createNews')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Scrivi news</p>
+                <p>Scrivi News</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /pages/layout/top-nav-sidebar.html"
-                class="nav-link">
+              <a href="{{route('manageNews')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Gestione news</p>
+                <p>Gestione News</p>
               </a>
             </li>
           </ul>
@@ -112,25 +137,67 @@
         @if ($item['name'] == 'showcase_product' ?? '')
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-newspaper"></i>
+            <i class="nav-icon fas fa-folder-plus"></i>
             <p>
-              News
+              Prodotti
               <i class="fas fa-angle-left right"></i>
             </p>
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /pages/layout/top-nav.html"
-                class="nav-link">
+              <a href="{{route('createProduct')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Scrivi news</p>
+                <p>Aggiungi prodotti</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /pages/layout/top-nav-sidebar.html"
-                class="nav-link">
+              <a href="{{route('manageProduct')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Gestione news</p>
+                <p>Gestione prodotti</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        @endif
+        @if ($item['name'] == 'showcase_technology' ?? '')
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-folder-plus"></i>
+            <p>
+              Tecnologie
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{route('createTechnology')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Aggiungi tecnologie</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('manageTechnology')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Gestione tecnologie</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        @endif
+        @if ($item['name'] == 'showcase_contact' ?? '')
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-info"></i>
+            <p>
+              Contatti
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{route('updateContact')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Aggiorna contatti</p>
               </a>
             </li>
           </ul>
@@ -147,17 +214,16 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /pages/layout/top-nav.html"
-                class="nav-link">
+              <a href="{{route('createLayout')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Aggiungi istantanea</p>
+                <p>Aggiungi layout</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /pages/layout/top-nav-sidebar.html"
                 class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Gestione progetto</p>
+                <p>Gestione layout</p>
               </a>
             </li>
           </ul>
@@ -208,7 +274,7 @@
         @endif
         @endforeach
       </ul>
-      
+
     </nav>
     <!-- /.sidebar-menu -->
   </div>

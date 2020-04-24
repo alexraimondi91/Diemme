@@ -36,4 +36,3 @@ Route::post('/filtro', 'NewsController@show_filter')->name('news.filter');
 Route::get('/login', 'LoginController@index')->name('login');
 
 Auth::routes();
-

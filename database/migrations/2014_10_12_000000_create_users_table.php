@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->string('fiscalCode_user',18);
             $table->string('address_user',60);
             $table->string('country_user',60);
+            $table->string('city_user',60)->nullable();
+            $table->string('region_user',60)->nullable();
             $table->timestamps();
             $table->boolean('active');
             $table->rememberToken();

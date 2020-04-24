@@ -54,7 +54,25 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input id="country_user" placeholder="Regione" type="text" class="form-control" name="country_user" required
+            <input id="country_user" placeholder="Regione" type="text" class="form-control" name="region_user" required
+              autocomplete="country_user" autofocus>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-address-card"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input id="country_user" placeholder="Nazione" type="text" class="form-control" name="country_user" required
+              autocomplete="country_user" autofocus>
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-address-card"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input id="country_user" placeholder="Città" type="text" class="form-control" name="city_user" required
               autocomplete="country_user" autofocus>
             <div class="input-group-append">
               <div class="input-group-text">
