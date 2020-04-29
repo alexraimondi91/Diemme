@@ -19,10 +19,8 @@ class layout_table_Seeder extends Seeder
         DB::table('layout')->insert([
             'name'=> Str::random(10),
             'final'=> 0,
-            'name_file'=> Str::random(10),
-            'path'=> '/storage/img/layout/1.jpg',
+            'status'=>0,
             'description'=> $faker->text(),
-            'user_id'=> rand(1,9),
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);

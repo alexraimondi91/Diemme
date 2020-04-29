@@ -7,13 +7,13 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Aggiorna tecnologia</h1>
+          <h1>Aggiorna Prodotto</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{route('manageTechnology')}}">Gestione tecnologie</a></li>
-            <li class="breadcrumb-item active">Aggiorna tecnologia</li>
+            <li class="breadcrumb-item"><a href="{{route('manageProduct')}}">Gestione Prodotti</a></li>
+            <li class="breadcrumb-item active">Aggiorna Prodotto</li>
           </ol>
         </div>
       </div>
@@ -22,7 +22,7 @@
   </section>
   <!-- Main content -->
   <section class="content">
-    <form method="POST" action="{{route('updateTechnologyPersist')}}" id="myForm" enctype="multipart/form-data">
+    <form method="POST" action="{{route('updateProductPersist')}}" id="myForm" enctype="multipart/form-data">
       <div class="row">
         <div class="col-md-12">
           @if($success ?? '')
@@ -45,7 +45,7 @@
           @endif
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Tecnologia</h3>
+              <h3 class="card-title">Prodotto</h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
                   title="Collapse">
@@ -55,6 +55,7 @@
             @if($item ?? '')
             <div class="card-body">
               @csrf
+            <input hidden name="id" value="{{$item->id}}">
               <div class="form-group  @error('title') has-error @enderror">
                 <label for="inputName">Titolo</label>
               <input required name="title" type="text" id="inputName" value="{{$item->name}}" class="form-control">

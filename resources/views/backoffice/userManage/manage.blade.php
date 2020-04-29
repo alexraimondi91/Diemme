@@ -7,13 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Gestione Tecnologie</h1>
+                    <h1>Gestione Utenti</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('manageTechnology')}}">Gestione tecnologie</a></li>
-                        <li class="breadcrumb-item active">Gestione Tecnologie</li>
+                        <li class="breadcrumb-item active">Gestione Utenti</li>
                     </ol>
                 </div>
             </div>
@@ -27,15 +26,17 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Lista Tecnologie</h3>
+                            <h3 class="card-title">Lista Utenti</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <table class="table table-bordered">
+                            <table  class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th style="width: 10px">#</th>
                                         <th>Nome</th>
+                                        <th>Cognome</th>
+                                        <th>Tipo utente</th>
                                         <th>Data Creazione</th>
                                         <th>Data Aggiornameto</th>
                                         <th style="width: 40px">Action</th>
@@ -44,13 +45,16 @@
                                 <tbody>
                                     @if($collection ?? '')
                                     @foreach ($collection as $item)
+                                    @if($item->id != Auth::user()->id)
                                     <tr>
                                         <td>{{$item->id}}</td>
-                                        <td>{{$item->name}}</td>
+                                        <td>{{$item->name_user}}</td>
+                                        <td>{{$item->surname_user}}</td>
+                                        <td>{{$item->group->name}}</td>
                                         <td>{{$item->created_at->diffForHumans()}}</td>
                                         <td>{{$item->updated_at->diffForHumans()}}</td>
                                         <td>
-                                            <form method="POST" action="{{route('deleteTechnology')}}">
+                                            <form method="POST" action="{{route('deleteUser')}}">
                                                 @csrf
                                                 <input name="id" hidden value="{{$item->id}}">
                                                 <button type="submit" class="btn btn-danger">
@@ -58,8 +62,7 @@
                                                 </button>
                                             </form>
                                             <hr>
-                                            <form method="GET" action="{{route('updateTechnology')}}">
-                                                
+                                            <form method="GET" action="{{route('updateUser')}}">
                                                 <input name="id" hidden value="{{$item->id}}">
                                                 <button type="submit" class="btn btn-secondary">
                                                     <i class="fas fa-edit"></i>
@@ -67,6 +70,7 @@
                                             </form>
                                         </td>
                                     </tr>
+                                    @endif
                                     @endforeach
                                     @endif
                                 </tbody>

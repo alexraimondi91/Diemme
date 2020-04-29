@@ -19,6 +19,8 @@
   <link rel="stylesheet" href="{{ URL::asset('backoffice/plugins/summernote/summernote-bs4.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -67,26 +69,20 @@
     <!-- ./wrapper -->
     <!-- Main Footer -->
     <footer class="main-footer">
-      <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
-      All rights reserved.
-      <div class="float-right d-none d-sm-inline-block">
-        <b>Version</b> 3.0.3-pre
-      </div>
+      <strong>Copyright &copy; 2014-2020 Diemme</strong>
     </footer>
   </div>
 
   <!-- REQUIRED SCRIPTS -->
   <!-- jQuery -->
-  <script src="https://code.jquery.com/jquery-3.5.0.min.js"
-    integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous">
-  </script>
+  <script src="{{ URL::asset('backoffice/plugins/jquery/jquery.min.js') }}"></script>
+
   <!-- Bootstrap -->
   <script src="{{ URL::asset('backoffice/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <!-- overlayScrollbars -->
   <script src="{{ URL::asset('backoffice/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
   <!-- AdminLTE App -->
   <script src="{{ URL::asset('backoffice/dist/js/adminlte.js') }}"></script>
-
   <!-- OPTIONAL SCRIPTS -->
   <script src="{{ URL::asset('backoffice/dist/js/demo.js') }}"></script>
 
@@ -97,6 +93,8 @@
     // Summernote
     $('.textarea').summernote()
   })
+</script>
+
 </body>
 
 </html>

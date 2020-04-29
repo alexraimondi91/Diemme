@@ -3,7 +3,7 @@
 namespace App;
 
 use App\models\auth\Group;
-use App\models\Index;
+use App\models\Layout;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -49,5 +49,9 @@ class User extends Authenticatable
 
     public function serviceHave(){
         return Group::find($this->group_id)->services()->get();
+    }
+
+    public function layout(){
+        return $this->belongsToMany(Layout::class);
     }
 }

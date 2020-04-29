@@ -17,6 +17,12 @@ class QuotationController extends Controller
         'id' => 'required',
     ];
 
+    protected $rules_update = [
+        'id' => 'requires|integer',
+        'title' => 'required|max:100',
+        'description' => 'required|max:400'
+    ];
+
     protected $errorMessages = [
         'title.required' => 'Il campo Titolo è obbligatorio',
         'dascription.required' =>'Il campo Descrizione è obbligatorio',
@@ -31,8 +37,7 @@ class QuotationController extends Controller
     public function index(Quotation $quotation)
     {
         $collection = $quotation::all();
-        return $collection;
-        //return view('/frontoffice/preventivi/preventivi',['collection' => $collection]);
+        return view('/frontoffice/preventivi/preventivi',['collection' => $collection]);
     }
     /**
      * Display a listing of the resource.
@@ -42,7 +47,7 @@ class QuotationController extends Controller
      */
     public function manage(Quotation $quotation)
     {
-        $collection = $quotation->orderBy('created_at', 'desc')->paginate(10);
+        $collection = $quotation->orderBy('created_at', 'desc')->paginate(5);
         return view('backoffice.quotationDashboard.manage', ['collection' => $collection]);
     }
 
@@ -80,4 +85,37 @@ class QuotationController extends Controller
         return view('backoffice.quotationDashboard.create', ['success' => 1]);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\models\Quotation  $quotation
+     * @return \Illuminate\Http\Response
+     */
+    public function updateView(Request $request,Quotation $quotation)
+    {
+        $request->validate($this->rules_delete);
+        $item = $quotation::find($request->id);
+        return view('backoffice.quotationDashboard.update', ['item' => $item]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\models\Quotation  $quotation
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Quotation $quotation)
+    {
+        $request->validate($this->rules_update, $this->errorMessages_update);
+        $quotation = $quotation->find((int)$request->id);
+        $quotation->exists=true;
+        $quotation->id = $request->id;
+        $quotation->user_id = Auth::user()->id;
+        $quotation->name = $request->title;
+        $quotation->description = $request->description;
+        $quotation->save();
+        return view('backoffice.quotationDashboard.update', ['success' => 1,'item'=>$quotation]);
+    }
 }

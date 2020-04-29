@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="{{route('dashboard')}}" class="brand-link">
+  <a href="{{route('index')}}" class="brand-link">
     <img
       src="https://scontent-mxp1-1.xx.fbcdn.net/v/t1.0-9/73078926_105557677537493_396295404041273344_n.png?_nc_cat=106&_nc_sid=85a577&_nc_ohc=m8cM8Y1piBwAX973Zug&_nc_ht=scontent-mxp1-1.xx&oh=763c2438c1d5b1981009a8173fa1aa6d&oe=5EB31DB4"
       alt="Diemmelogo" class="brand-image img-circle elevation-3" style="opacity: .8">
@@ -28,7 +28,7 @@
           </a>
         </li>
         @foreach ( Auth::user()->serviceHave() as $item)
-        @if ($item['name'] == 'permission' ?? '')
+        @if ($item['name'] == 'privilege_dashboard' ?? '')
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-user-friends"></i>
@@ -39,23 +39,22 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /pages/layout/top-nav.html"
-                class="nav-link">
+            <a href="{{route('createUser')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Aggiungi utente</p>
+                <p>Crea utente</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /pages/layout/top-nav-sidebar.html"
+            <a href="{{route('manageUser')}}"
                 class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
-                <p>Gestione utente</p>
+                <p>Gestione utenti</p>
               </a>
             </li>
           </ul>
         </li>
         @endif
-        @if ($item['name'] == 'permission' ?? '')
+        @if ($item['name'] == 'privilege_dashboard' ?? '')
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-lock"></i>
@@ -66,14 +65,14 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /pages/layout/top-nav.html"
+            <a href="{{route('createGroup')}}"
                 class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Aggiungi permessi</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /pages/layout/top-nav-sidebar.html"
+            <a href="{{route('manageGroup')}}"
                 class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Gestione permessi</p>
@@ -93,15 +92,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{{route('createQuotation')}}" 
-                class="nav-link">
+              <a href="{{route('createQuotation')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Aggiungi istruzione</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{route('manageQuotation')}}"
-                class="nav-link">
+              <a href="{{route('manageQuotation')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Gestione istruzioni</p>
               </a>
@@ -220,8 +217,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /pages/layout/top-nav-sidebar.html"
-                class="nav-link">
+              <a href="{{route('manageLayout')}}" class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Gestione layout</p>
               </a>

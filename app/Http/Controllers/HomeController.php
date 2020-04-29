@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-
+use App\models\Layout;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -22,12 +23,15 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Layout $layout, User $user)
     {
         foreach(Auth::user()->serviceHave() as $item)
         switch($item['name']){
             case 'privilege_dashboard': 
-                return view('backoffice/dashboard/dashboardPrivilege');
+                $collection1 = $layout->whereYear('status', '=', 3)->get();
+                $collection2 = $user->whereYear('created_at', '=', date('Y'))->get();
+                return view('backoffice/dashboard/dashboardPrivilege',
+                ['collection1'=>$collection1, 'collection2'=>$collection2]);
             case 'client_dashboard': 
                 return view('backoffice/dashboard/dashboardClient');
             default: 

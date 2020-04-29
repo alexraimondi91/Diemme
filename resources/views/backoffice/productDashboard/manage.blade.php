@@ -56,6 +56,14 @@
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
+                                            <hr>
+                                            <form method="GET" action="{{route('updateProduct')}}">
+                                                
+                                                <input name="id" hidden value="{{$item->id}}">
+                                                <button type="submit" class="btn btn-secondary">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                     @endforeach

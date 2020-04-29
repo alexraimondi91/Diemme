@@ -7,13 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Gestione Tecnologie</h1>
+                    <h1>Gestione Layout</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('manageTechnology')}}">Gestione tecnologie</a></li>
-                        <li class="breadcrumb-item active">Gestione Tecnologie</li>
+                        <li class="breadcrumb-item active">Gestione Layout</li>
                     </ol>
                 </div>
             </div>
@@ -27,7 +26,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Lista Tecnologie</h3>
+                            <h3 class="card-title">Lista Layout</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -50,7 +49,7 @@
                                         <td>{{$item->created_at->diffForHumans()}}</td>
                                         <td>{{$item->updated_at->diffForHumans()}}</td>
                                         <td>
-                                            <form method="POST" action="{{route('deleteTechnology')}}">
+                                            <form method="POST" action="{{route('deleteLayout')}}">
                                                 @csrf
                                                 <input name="id" hidden value="{{$item->id}}">
                                                 <button type="submit" class="btn btn-danger">
@@ -58,8 +57,7 @@
                                                 </button>
                                             </form>
                                             <hr>
-                                            <form method="GET" action="{{route('updateTechnology')}}">
-                                                
+                                            <form method="GET" action="{{route('updateLayout')}}">
                                                 <input name="id" hidden value="{{$item->id}}">
                                                 <button type="submit" class="btn btn-secondary">
                                                     <i class="fas fa-edit"></i>

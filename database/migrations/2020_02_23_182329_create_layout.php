@@ -16,13 +16,11 @@ class CreateLayout extends Migration
     {
         Schema::create('layout', function (Blueprint $table) {
             $table->Increments('id');
+            $table->string('final');
             $table->string('name',20);
             $table->boolean('status');
-            $table->json('path')->default(new Expression('(JSON_ARRAY())'));
+            $table->json('path')->nullable();
             $table->text('description');
-            $table->integer('user_id')->unsigned();;
-            $table->foreign('user_id')->on('users')->references('id')
-            ->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

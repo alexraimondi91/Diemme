@@ -26,7 +26,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Lista Istruzione Preventivi</h3>
+                            <h3 class="card-title">Lista Preventivi</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -54,6 +54,14 @@
                                                 <input name="id" hidden value="{{$item->id}}">
                                                 <button type="submit" class="btn btn-danger">
                                                     <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                            <hr>
+                                            <form method="GET" action="{{route('updateQuotation')}}">
+                                                
+                                                <input name="id" hidden value="{{$item->id}}">
+                                                <button type="submit" class="btn btn-secondary">
+                                                    <i class="fas fa-edit"></i>
                                                 </button>
                                             </form>
                                         </td>

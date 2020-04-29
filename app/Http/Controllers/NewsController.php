@@ -5,11 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\models\Index;
 use App\User;
+use PHPHtmlParser\Dom;
 use Illuminate\Support\Facades\Auth;
 
 
 class NewsController extends Controller
 {
+    protected $rules_update = [
+        
+    ];
+
+    protected $errorMessages_update = [
+        'title.required' => 'Il campo Titolo è obbligatorio',
+        'dascription.required' => 'Il campo Descrizione è obbligatorio',
+    ];
 
     protected $rules = [
         'title' => 'required|max:255',
@@ -44,7 +53,7 @@ class NewsController extends Controller
      */
     public function manage(Index $index)
     {
-        $collection = $index->orderBy('created_at', 'desc')->paginate(10);
+        $collection = $index->orderBy('created_at', 'desc')->paginate(5);
         return view('backoffice.newsDashboard.manage', ['collection' => $collection]);
     }
 
@@ -108,17 +117,11 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-
-        //  $this->validate($request, [
-        //      'principalImage' => ['required','max:1024'],
-        //      'summernoteInput' => ['required','max:10240'],
-        //      'title' => 'required',
-        //  ]);
-        $this->validate($request, $this->rules);
+        $request->validate($this->rules_update, $this->errorMessages_update);
         $detail = $request->summernoteInput;
-        $dom = new \domdocument();
-        $dom->loadHtml($detail, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-        $images = $dom->getelementsbytagname('img');
+        $dom = new Dom;
+        $dom->load($detail);
+        $images = $dom->getElementsbyTag('img');
 
         //loop over img elements, decode their base64 src and save them to public folder,
         //and then replace base64 src with stored image URL.
@@ -137,7 +140,7 @@ class NewsController extends Controller
                 $img->setattribute('src', '/storage/news/' . Auth::user()->id . '-' . $image_name);
             }
         }
-        $detail = $dom->savehtml();
+        $detail = $dom;
         $news = new Index;
         $news->user_id = Auth::user()->id;
         $news->name = $request->title;
@@ -156,5 +159,75 @@ class NewsController extends Controller
             else return view('backoffice.newsDashboard.create', ['warning' => 1]);
         }
         return view('backoffice.newsDashboard.create', ['warning' => 1]);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\models\Index  $news
+     * @return \Illuminate\Http\Response
+     */
+    public function updateView(Request $request,Index $news)
+    {
+        $request->validate($this->rules_delete);
+        $item = $news::find($request->id);
+        return view('backoffice.newsDashboard.update', ['item' => $item]);
+    }
+
+     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\models\Index  $index
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Index $news)
+    {
+        $request->validate($this->rules_update, $this->errorMessages_update);
+        $detail = $request->summernoteInput;
+        $dom = new Dom;
+        $dom->load($detail);
+        $images = $dom->getElementsbyTag('img');
+
+        //loop over img elements, decode their base64 src and save them to public folder,
+        //and then replace base64 src with stored image URL.
+        foreach ($images as $k => $img) {
+            $data = $img->getattribute('src');
+            if (strstr($data, "http") || strstr($data, "https")) {
+                $img->setattribute('src', $data);
+            } else {
+                list($type, $data) = explode(';', $data);
+                list(, $data)      = explode(',', $data);
+                $data = base64_decode($data);
+                $image_name = time() . $k . '.jpg';
+                $path = public_path() . '/storage/news/' . Auth::user()->id . '-' . $image_name;
+                file_put_contents($path, $data);
+                $img->removeattribute('src');
+                $img->setattribute('src', '/storage/news/' . Auth::user()->id . '-' . $image_name);
+            }
+        }
+        $detail = $dom;
+        $news = $news->find((int)$request->id);
+        $news->exists = true;
+        $news->user_id = Auth::user()->id;
+        $news->id = $request->id;
+        $news->name = $request->title;
+        $news->description = ($detail);
+        //check image
+        if ($request->hasFile('principalImage')) {
+            if ($request->file('principalImage')->isValid()) {
+                $dir = 'public/img/news_showcase/';
+                $image_name = time().date('Y-m-d'). '.jpg';
+                if ($request->principalImage->storeAs($dir, Auth::user()->id . $image_name)) {
+                    $news->path = '/storage/img/news_showcase/' . Auth::user()->id . $image_name;
+                    $news->save();
+                    return view('backoffice.newsDashboard.update', ['success' => 1,'item'=>$news]);
+                } else return view('backoffice.newsDashboard.update', ['warning' => 1,'item'=>$news]);
+            }
+            else return view('backoffice.newsDashboard.update', ['warning' => 1,'item'=>$news]);
+        }
+        $news->save();
+        return view('backoffice.newsDashboard.update', ['success' => 1,'item'=>$news]);
     }
 }

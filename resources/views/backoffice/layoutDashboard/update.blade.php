@@ -10,7 +10,7 @@
             <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <h4><i class="icon fa fa-exclamation"></i></h4>
-                Aggiornamento non avvenuto! Utente non valido!
+                Aggiornamento non avvenuto! 
             </div>
             <!-- warning allert -->
             @endif
@@ -64,6 +64,7 @@
         </div><!-- /.container-fluid -->
     </section>
 
+    @if($item ?? '')
     <!-- Main content -->
     <section class="content">
         <div class="row">
@@ -77,22 +78,19 @@
                                 <i class="fas fa-minus"></i></button>
                         </div>
                     </div>
-                    <form action="{{route('createLayoutPersist')}}" method="POST" enctype="multipart/form-data">
+                    
+                    <form action="{{route('updateLayoutPersist')}}" method="POST" enctype="multipart/form-data">
                         @csrf
+                    <input name="id" value="{{$item->id}}" hidden>
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="inputName">Nome del progetto</label>
-                                <input type="text" name="name" id="inputName" class="form-control">
+                            <input type="text" value="{{$item->name}}" name="name" id="inputName" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="inputDescription">Breve Descrizione</label>
                                 <textarea id="inputDescription" name="description" class="form-control"
-                                    rows="4"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputClientCompany">ID cliente</label>
-                                <input type="number" id="inputClientCompany" name="user_id" class="form-control"
-                                    value="Deveint Inc">
+                            rows="4">{{$item->description}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputFile">Immagini di Layout</label>
@@ -113,11 +111,12 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <input type="submit" value="Crea" class="btn btn-success float-right">
+                <input type="submit" value="Salva" class="btn btn-success float-right">
             </div>
         </div>
         </form>
     </section>
+    @endif
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->

@@ -18,7 +18,6 @@ class news_showcase_table_Seeder extends Seeder
     {
         for ($i=0; $i<10; $i++){
             DB::table('news_showcase')->insert([
-                'name_file'=> Str::random(10),
                 'name'=>Str::random(10),
                 'path'=>"/storage/img/news_showcase/1.jpg",
                 'description'=>$faker->text(),
