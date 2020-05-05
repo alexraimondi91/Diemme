@@ -1,7 +1,7 @@
 @extends('/frontoffice/layout/layout')
 @section('content')
 <!-- breadcam_area_start -->
-<div style="background-image: url('storage/img/product_showcase/1.jpg')" class="breadcam_area overlay2">
+<div style="background-image: url('{{asset('storage/img/product_showcase/1.jpg')}}')" class="breadcam_area overlay2">
 	<div class="bradcam_text">
 		<h3>Prodotti</h3>
 	</div>

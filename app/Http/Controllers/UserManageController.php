@@ -97,8 +97,6 @@ class UserManageController extends Controller
 
     }
 
-    
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -160,7 +158,7 @@ class UserManageController extends Controller
         //
         $request->validate($this->rules_delete);
         $user = $user->find((int) $request->id);
-        $user->delete();
+        $user->forceDelete();
         return redirect(route('manageUser'));
     }
 }

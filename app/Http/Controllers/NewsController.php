@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Auth;
 class NewsController extends Controller
 {
     protected $rules_update = [
-        
+        'name'=>'required|string',
+        'file' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ];
 
     protected $errorMessages_update = [
@@ -21,7 +22,7 @@ class NewsController extends Controller
     ];
 
     protected $rules = [
-        'title' => 'required|max:255',
+        'title' => 'required|string|max:255',
     ];
 
     protected $rules_delete = [
@@ -117,7 +118,7 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->rules_update, $this->errorMessages_update);
+        $request->validate($this->rules, $this->errorMessages_update);
         $detail = $request->summernoteInput;
         $dom = new Dom;
         $dom->load($detail);
@@ -134,10 +135,10 @@ class NewsController extends Controller
                 list(, $data)      = explode(',', $data);
                 $data = base64_decode($data);
                 $image_name = time() . $k . '.jpg';
-                $path = public_path() . '/storage/news/' . Auth::user()->id . '-' . $image_name;
+                $path = public_path(). '/storage/news/' . Auth::user()->id . '-' . $image_name;
                 file_put_contents($path, $data);
                 $img->removeattribute('src');
-                $img->setattribute('src', '/storage/news/' . Auth::user()->id . '-' . $image_name);
+                $img->setattribute('src', url(''). '/storage/news/' . Auth::user()->id . '-' . $image_name);
             }
         }
         $detail = $dom;
@@ -204,7 +205,7 @@ class NewsController extends Controller
                 $path = public_path() . '/storage/news/' . Auth::user()->id . '-' . $image_name;
                 file_put_contents($path, $data);
                 $img->removeattribute('src');
-                $img->setattribute('src', '/storage/news/' . Auth::user()->id . '-' . $image_name);
+                $img->setattribute('src', url(''). '/storage/news/' . Auth::user()->id . '-' . $image_name);
             }
         }
         $detail = $dom;
@@ -212,7 +213,7 @@ class NewsController extends Controller
         $news->exists = true;
         $news->user_id = Auth::user()->id;
         $news->id = $request->id;
-        $news->name = $request->title;
+        $news->name = $request->name;
         $news->description = ($detail);
         //check image
         if ($request->hasFile('principalImage')) {

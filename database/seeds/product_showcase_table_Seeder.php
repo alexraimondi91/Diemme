@@ -18,7 +18,6 @@ class product_showcase_table_Seeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
         DB::table('product_showcase')->insert([
             'name'=>Str::random(10),
-            'name_file'=>Str::random(10),
             'path'=>'Storage/img/product_showcase/1.jpg',
             'description'=>$faker->text(),
             'user_id'=>rand(1,10),

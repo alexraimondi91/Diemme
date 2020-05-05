@@ -4,7 +4,7 @@
    <div class="single-post">
       @if($collection ?? '')
       <div class="feature-img">
-         <img class="img-fluid" src="{{$collection->path}}" alt="">
+         <img class="img-fluid" src="{{asset($collection->path)}}" alt="">
       </div>
       <div class="blog_details">
          <h2>{{$collection->name}}

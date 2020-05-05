@@ -6,7 +6,7 @@
         @foreach ($collection as $item)
         <article class="blog_item">
             <div class="blog_item_img">
-                <img class="card-img rounded-0" src="{{$item->path}}" alt="">
+                <img class="card-img rounded-0" src="{{asset($item->path)}}" alt="">
             <a href="{{route('news.id', $item->id)}}" class="blog_item_date">
                     <h3>{{$item->created_at->diffForHumans()}}</h3>
                 </a>

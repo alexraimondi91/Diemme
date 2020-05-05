@@ -12,4 +12,7 @@ class Layout extends Model
     public function user(){
         return $this->belongsToMany(User::class)->withTimestamps();
     }
+    public function files(){
+        return $this->belongsToMany(FileLayout::class)->withTimestamps();
+    }
 }

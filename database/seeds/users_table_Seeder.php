@@ -29,7 +29,7 @@ class users_table_Seeder extends Seeder
             'fiscalCode_user' => Str::random(16),
             'address_user' => $faker->address(),
             'email_verified_at' => Carbon::now(),
-            'group_id' => rand(1,3),
+            'group_id' => rand(1,4),
             'active' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()

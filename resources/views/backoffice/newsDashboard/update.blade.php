@@ -73,8 +73,9 @@
                 <label for="inputDescription">Testo</label>
                 <div class="card-body pad">
                   <div class="mb-3">
-                    <p>Si consiglia immagini di al max 1MB</p>
-                    <textarea class="form-control" name="description" rows="3" placeholder="Descrizione....">{{$item->description}}</textarea>
+                    <p>Si consiglia immagini per un totale di al max 1MB</p>
+                    <textarea required name="summernoteInput" class="textarea @error('summernoteInput') is-invalid @enderror"
+                  placeholder="Place some text here">{{$item->description}}</textarea>
                   </div>
                 </div>
               </div>

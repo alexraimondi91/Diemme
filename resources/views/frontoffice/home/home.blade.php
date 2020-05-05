@@ -5,14 +5,14 @@
     @if($collection ?? '')
     <div class="slider_active owl-carousel">
         @foreach($collection as $item)
-        <div style="background-image: url('{{$item->path}}')"
+        <div style="background-image: url('{{asset($item->path)}}')"
             class="single_slider overlay2 d-flex align-items-center justify-content-center slider_bg_1">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="slider_text text-center">
                             <a href="{{route('news.id', $item->id)}}">
-                                <h3>{{$item->name}}</h3>
+                                <h3>{{($item->name)}}</h3>
                             </a>
                         </div>
                     </div>

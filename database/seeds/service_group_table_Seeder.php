@@ -13,11 +13,11 @@ class service_group_table_Seeder extends Seeder
      */
     public function run()
     {
-        for($i=1; $i<= 3; $i++)
+        for($i=1; $i<= 4; $i++)
             {
                 DB::table('group_service')->insert([
-                'service_id'=> rand(1,4),
-                'group_id' => rand(1,4),
+                'service_id'=> $i,
+                'group_id' => $i,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
                 ]);

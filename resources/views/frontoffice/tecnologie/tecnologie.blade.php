@@ -1,7 +1,7 @@
 @extends('/frontoffice/layout/layout')
 @section('content')
 <!-- breadcam_area_start -->
-<div style="background-image: url('storage/img/technology_showcase/1.jpg')" class="breadcam_area overlay2">
+<div style="background-image: url('{{asset('storage/img/technology_showcase/1.jpg')}}')" class="breadcam_area overlay2">
 	<div class="bradcam_text">
 		<h3>Tecnologie</h3>
 	</div>
@@ -29,7 +29,7 @@
 			</div>
 			<div class="col-xl-5 offset-xl-1 col-md-6">
 				<div class="single_project_thumb">
-					<img src="{{$item->path}}" alt="">
+					<img src="{{asset($item->path)}}" alt="">
 				</div>
 			</div>
 		</div>

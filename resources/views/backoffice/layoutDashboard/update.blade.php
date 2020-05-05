@@ -57,7 +57,8 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Crea layout</li>
+                        <li class="breadcrumb-item"><a href="{{route('manageLayout')}}">Gestione Layout </a></li>
+                        <li class="breadcrumb-item active">Aggiorna layout</li>
                     </ol>
                 </div>
             </div>
@@ -87,6 +88,17 @@
                                 <label for="inputName">Nome del progetto</label>
                             <input type="text" value="{{$item->name}}" name="name" id="inputName" class="form-control">
                             </div>
+                            <div class="form-group">
+                                <label>Passa il progetto a</label>
+                                <select name="owner" class="form-control select2" style="width: 100%;">
+                                  <option value="{{Auth::user()->id}}" selected="selected">nessuno</option>
+                                  @if($users ?? '')
+                                  @foreach ($users as $user)
+                                    <option value="{{$user->id}}">{{$user->name_user}} {{$user->surname_user}}</option>
+                                  @endforeach
+                                  @endif
+                                </select>
+                              </div>
                             <div class="form-group">
                                 <label for="inputDescription">Breve Descrizione</label>
                                 <textarea id="inputDescription" name="description" class="form-control"

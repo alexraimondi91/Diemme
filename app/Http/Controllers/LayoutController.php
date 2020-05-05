@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use App\models\FileLayout;
 use App\models\Layout;
 use App\User;
 use Illuminate\Http\Request;
@@ -22,8 +24,9 @@ class LayoutController extends Controller
     ];
 
     protected $rules_update = [
-        'name' => 'string|max:255',
-        'description' => '|string',
+        'name' => 'required|string',
+        'description' => 'string',
+        'owner'=>'integer',
         'file.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
     ];
 
@@ -64,29 +67,27 @@ class LayoutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(User $user, Layout $layout, Request $request)
+    public function store(User $user, Layout $layout,FileLayout $file, Request $request)
     {
         $request->validate($this->rules, $this->errorMessages);
         $user = $user->find((int) $request->user_id);
-
-        if ($user && $user->group_id == 4) {
-
+        if ($user && Auth::user()->serviceHave()!='design_manager') {
             $layout->name = $request->name;
             $layout->description = $request->description;
             $layout->status = 0;
             $layout->final = 0;
-            $file  = array();
-            $counter = 1;
+            $filetosave  = array();
+            $counter = 0;
             foreach ($request->file as $item) {
                 $dir = 'public/layout/';
                 $image_name = Auth::user()->id . $counter . time() . date('Y-m-d') . '.jpg';
                 $item->storeAs($dir, $image_name);
-                array_push($file, '/storage/layout/' . $image_name);
+                $path = '/storage/layout/' . $image_name;
+                $filetosave[] = new FileLayout(['path' => $path]);
                 $counter++;
             }
-            $layout->path = json_encode($file);
             $layout->save();
-
+            $layout->files()->saveMany($filetosave);
             $layout->user()->attach([Auth::user()->id, $user->id]);
             return view('backoffice.layoutDashboard.create', ['success' => 1]);
         } else return view('backoffice.layoutDashboard.create', ['warning' => 1]);
@@ -100,9 +101,15 @@ class LayoutController extends Controller
      */
     public function show(Layout $layout)
     {
-        $item = Auth::user()->layout()->get();
-        return $item;
-        //return view('backoffice.layoutDashboard.manage', ['item' => $item]);
+        if((Auth::user()->serviceHave()!='design_manager'))
+        {
+        $layout = Auth::user()->layout()->orderBy('created_at','desc')->first();
+        if($layout == null)
+            return redirect(route('dashboard'));
+        $photos = $layout->files()->get();
+        return view('backoffice.layoutDashboard.view', ['item' => $layout,'photos'=>$photos]);
+        }
+        return redirect(route('dashboard'));
     }
 
     /**
@@ -118,10 +125,9 @@ class LayoutController extends Controller
 
     public function manage(Layout $layout)
     {
-        $collection = $layout->orderBy('created_at', 'desc')->paginate(5);
+        $collection = Auth::user()->layout()->where('final','!=','1')->orderBy('created_at', 'desc')->paginate(5);
         return view('backoffice.layoutDashboard.manage', ['collection' => $collection]);
     }
-
     /**
      * View the specific form update
      *
@@ -129,11 +135,12 @@ class LayoutController extends Controller
      * @param  \App\models\Layout  $layout
      * @return \Illuminate\Http\Response
      */
-    public function updateView(Request $request, Layout $layout)
+    public function updateView(Request $request,User $users)
     {
         $request->validate($this->rules_delete);
-        $item = $layout::find((int) $request->id);
-        return view('backoffice.layoutDashboard.update', ['item' => $item]);
+        $item = Auth::user()->layout()->find((int) $request->id);
+        $users = User::forService()->where('service.id','=','7')->get();
+        return view('backoffice.layoutDashboard.update', ['item' => $item,'users'=>$users]);
     }
 
     /**
@@ -143,36 +150,40 @@ class LayoutController extends Controller
      * @param  \App\models\Layout  $layout
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Layout $layout)
+    public function update(Request $request, Layout $layout,FileLayout $file)
     {
+        $users = User::forService()->where('service.id','=','7')->get();
         $request->validate($this->rules_update, $this->errorMessages_update);
-
         $layout = $layout->find((int) $request->id);
-
         if ($layout) {
             $layout->id = $request->id;
             $layout->exists = true;
             $layout->name = $request->name;
             $layout->description = $request->description;
-            if (isset($request->status) && isset($request->final)) {
-                $layout->status = 0;
-                $layout->final = 0;
+            if (isset($request->owner)) {
+                $layout->user()->detach([Auth::user()->id]);
+                $layout->user()->attach([(int)$request->owner]);
             }
-            $file  = array();
+            $filetosave  = array();
             $counter = 1;
             if (isset($request->file)) {
                 foreach ($request->file as $item) {
                     $dir = 'public/layout/';
                     $image_name = Auth::user()->id . $counter . time() . date('Y-m-d') . '.jpg';
                     $item->storeAs($dir, $image_name);
-                    array_push($file, '/storage/layout/' . $image_name);
+                    $path = '/storage/layout/' . $image_name;
+                    $filetosave[] = new FileLayout(['path' => $path]);
                     $counter++;
                 }
-                $layout->path = json_encode($file);
+
+                $layout->save();
+                $layout->files()->delete();
+                $layout->files()->saveMany($filetosave);
+                return view('backoffice.layoutDashboard.update', ['success' => 1,'item'=>$layout,'users'=>$users]);
             }
-            $layout->save();
-            return view('backoffice.layoutDashboard.update', ['success' => 1,'item'=>$layout]);
-        } else return view('backoffice.layoutDashboard.update', ['warning' => 1]);
+            else $layout->save();
+            return view('backoffice.layoutDashboard.update', ['success' => 1,'item'=>$layout,'users'=>$users]);
+        } else return view('backoffice.layoutDashboard.update', ['warning' => 1,'item'=>$layout,'users'=>$users]);
     }
 
     /**
@@ -186,8 +197,29 @@ class LayoutController extends Controller
         $request->validate($this->rules_delete);
         $layout = $layout->find((int) $request->id);
         if ($layout->id)
-            $layout->user()->detach();
-        $layout->delete();
+            {
+                $layout->user()->delete();
+                $layout->files()->delete();
+                $layout->delete();
+            }
+        return redirect(route('manageLayout',$layout->id));
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\models\Layout  $layout
+     * @return \Illuminate\Http\Response
+     */
+    public function moveToProductation(Request $request, Layout $layout)
+    {
+        $request->validate($this->rules_delete);
+        $layout = $layout->find((int) $request->id);
+        if ($layout->id)
+            {
+                $layout->user()->delete();
+                $layout->files()->delete();
+                $layout->delete();
+            }
         return redirect(route('manageLayout',$layout->id));
     }
 }

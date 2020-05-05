@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="{{route('dashboard')}}">dashboard</a></li>
+                    <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Progetto Layout</li>
                     </ol>
                 </div>
@@ -21,7 +21,8 @@
 
     <!-- Main content -->
     <section class="content">
-
+        @if($item ?? '')
+        
         <!-- Default box -->
         <div class="card card-solid">
             <div class="card-body">
@@ -29,35 +30,30 @@
                     <div class="col-12 col-sm-6">
                     <h3 class="d-inline-block d-sm-none">{{$item->name}}</h3>
                         <div class="col-12">
-                            <img src="../../dist/img/prod-1.jpg" class="product-image" alt="Product Image">
-                        </div>
+                    @foreach ($photos as $key=>$photo)
+                    @if ($key==0)
+                        <img src="{{asset($photo->path)}}" class="product-image" alt="Product Image">
                         <div class="col-12 product-image-thumbs">
-                            <div class="product-image-thumb active"><img src="../../dist/img/prod-1.jpg"
-                                    alt="Product Image"></div>
-                            <div class="product-image-thumb"><img src="../../dist/img/prod-2.jpg" alt="Product Image">
-                            </div>
-                            <div class="product-image-thumb"><img src="../../dist/img/prod-3.jpg" alt="Product Image">
-                            </div>
-                            <div class="product-image-thumb"><img src="../../dist/img/prod-4.jpg" alt="Product Image">
-                            </div>
-                            <div class="product-image-thumb"><img src="../../dist/img/prod-5.jpg" alt="Product Image">
-                            </div>
+                        <div class="product-image-thumb active"><img src="{{asset($photo->path)}}" alt="Product Image"></div>
+                    @else
+                        <div class="product-image-thumb" ><img src="{{asset($photo->path)}}" alt="Product Image"></div>
+                    @endif
+                    @endforeach
                         </div>
+                        </div>
+                        
                     </div>
                     <div class="col-12 col-sm-6">
-                        <h3 class="my-3">Name project</h3>
+                        <h3 class="my-3">{{$item->name}}</h3>
                         <hr>
-                        <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown
-                            aliqua butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terr.
-                        </p>
-
+                        <p>{{$item->description}}</p>
                     </div>
                 </div>
             </div>
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
-
+        @endif
     </section>
     <!-- /.content -->
 </div>

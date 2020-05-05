@@ -160,4 +160,12 @@ Route::prefix('/user')->group(function () {
     Route::post('/update','UserManageController@update')->name('updateUserPersist');
     
 });
+Route::prefix('/factory')->group(function () {
 
+    Route::get('/manage','FactoryController@index')->name('makeList');
+
+    Route::post('/rollback','FactoryController@rollback')->name('rollbackProduct');
+
+    Route::post('/tosend','FactoryController@toSend')->name('sendProduct');
+    
+});

@@ -252,6 +252,33 @@
           </ul>
         </li>
         @endif
+        @if ($item['name'] == 'factory' ?? '')
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-industry"></i>
+            <p>
+              Ordini
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+            <a href="{{route('makeList')}}"
+                class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Ordini da realizzare</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /pages/layout/top-nav-sidebar.html"
+                class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Gestione chat</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        @endif
         @if ($item['name'] == 'chat_simple' ?? '')
         <li class="nav-item has-treeview">
           <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /index2.html" class="nav-link">
@@ -262,7 +289,7 @@
         @endif
         @if ($item['name'] == 'show_layout' ?? '')
         <li class="nav-item has-treeview">
-          <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /index2.html" class="nav-link">
+        <a href="{{route('showLayout')}}" class="nav-link">
             <i class="nav-icon fas fa-image"></i>
             <p>Progetto Layout</p>
           </a>

@@ -16,7 +16,6 @@ class CreateProductShowcase extends Migration
         Schema::create('product_showcase', function (Blueprint $table) {
             $table->Increments('id');
             $table->string('name',20);
-            $table->string('name_file',40);
             $table->string('path',60);
             $table->text('description');
             $table->integer('user_id')->unsigned();;

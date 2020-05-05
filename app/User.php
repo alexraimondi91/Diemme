@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -53,5 +54,14 @@ class User extends Authenticatable
 
     public function layout(){
         return $this->belongsToMany(Layout::class);
+    }
+
+    public static function forService(){
+        return DB::table('users')
+        ->join('group', 'group.id', '=', 'users.group_id')
+        ->join('group_service', 'group.id', '=', 'group_service.group_id')
+        ->join('service', 'service.id', '=', 'group_service.service_id')
+        ->select('service.*')
+        ->select('users.*');
     }
 }

@@ -17,7 +17,7 @@ class CreateLayout extends Migration
         Schema::create('layout', function (Blueprint $table) {
             $table->Increments('id');
             $table->string('final');
-            $table->string('name',20);
+            $table->string('name');
             $table->boolean('status');
             $table->json('path')->nullable();
             $table->text('description');
