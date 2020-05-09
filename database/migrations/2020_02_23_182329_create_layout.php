@@ -18,7 +18,7 @@ class CreateLayout extends Migration
             $table->Increments('id');
             $table->string('final');
             $table->string('name');
-            $table->boolean('status');
+            $table->string('status')->nullable();
             $table->json('path')->nullable();
             $table->text('description');
             $table->timestamps();

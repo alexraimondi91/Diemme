@@ -41,6 +41,7 @@ class LayoutController extends Controller
         'user_id.required' => 'Il campo id utente è obbligatorio',
         'file.required' => 'Il campo file è obbligatorio',
     ];
+
     /**
      * Display a listing of the resource.
      *
@@ -48,18 +49,42 @@ class LayoutController extends Controller
      */
     public function index()
     {
-        //
+        $layout = Auth::user()->layout()->orderBy('created_at','desc')->paginate(5);
+        if($layout == null)
+            return redirect(route('dashboard'));
+        return view('backoffice.layoutDashboard.manage_customer',['collection'=>$layout]);
     }
-
     /**
-     * Show the form for creating a new resource.
+     * Display a listing Layout Foctory send for total
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function orderStateTot(Layout $layout)
     {
-        //
+        $this->authorize('orderStateTot',$layout);
+        $layout = $layout->orderBy('created_at','desc')
+                ->where('final','=',1)
+                ->paginate(5);
+        if($layout == null)
+            return redirect(route('dashboard'));
+        return view('backoffice.factoryDashboard.manageStatus',['collection'=>$layout]);
     }
+    /**
+     * Display a listing Layout Foctory send for Single user
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function orderStateSingle(Layout $layout)
+    {
+        $layout = Auth::user()->layout()->orderBy('created_at','desc')
+        ->where('final','=',1)
+        ->where('status','=','make')
+        ->paginate(5);
+        if($layout == null)
+            return redirect(route('dashboard'));
+        return view('backoffice.factoryDashboard.manageStatus',['collection'=>$layout]);
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -69,9 +94,10 @@ class LayoutController extends Controller
      */
     public function store(User $user, Layout $layout,FileLayout $file, Request $request)
     {
+        $this->authorize('store',$layout);
         $request->validate($this->rules, $this->errorMessages);
         $user = $user->find((int) $request->user_id);
-        if ($user && Auth::user()->serviceHave()!='design_manager') {
+        if ($user) {
             $layout->name = $request->name;
             $layout->description = $request->description;
             $layout->status = 0;
@@ -99,28 +125,13 @@ class LayoutController extends Controller
      * @param  \App\models\Layout  $layout
      * @return \Illuminate\Http\Response
      */
-    public function show(Layout $layout)
+    public function show(Request $request, Layout $layout)
     {
-        if((Auth::user()->serviceHave()!='design_manager'))
-        {
-        $layout = Auth::user()->layout()->orderBy('created_at','desc')->first();
-        if($layout == null)
-            return redirect(route('dashboard'));
+        $this->authorize('show',$layout);
+        $request->validate(['id'=>'required|integer']);
+        $layout = $layout->find((int)$request->id);
         $photos = $layout->files()->get();
         return view('backoffice.layoutDashboard.view', ['item' => $layout,'photos'=>$photos]);
-        }
-        return redirect(route('dashboard'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\models\Layout  $layout
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Layout $layout)
-    {
-        //
     }
 
     public function manage(Layout $layout)
@@ -137,10 +148,12 @@ class LayoutController extends Controller
      */
     public function updateView(Request $request,User $users)
     {
+        $this->authorize('updateView',Layout::class);
         $request->validate($this->rules_delete);
         $item = Auth::user()->layout()->find((int) $request->id);
+        $owners = $item->user()->get();
         $users = User::forService()->where('service.id','=','7')->get();
-        return view('backoffice.layoutDashboard.update', ['item' => $item,'users'=>$users]);
+        return view('backoffice.layoutDashboard.update', ['item' => $item,'users'=>$users,'owners'=>$owners]);
     }
 
     /**
@@ -152,6 +165,7 @@ class LayoutController extends Controller
      */
     public function update(Request $request, Layout $layout,FileLayout $file)
     {
+        $this->authorize('update',$layout);
         $users = User::forService()->where('service.id','=','7')->get();
         $request->validate($this->rules_update, $this->errorMessages_update);
         $layout = $layout->find((int) $request->id);
@@ -177,6 +191,7 @@ class LayoutController extends Controller
                 }
 
                 $layout->save();
+                $layout->files()->detach();
                 $layout->files()->delete();
                 $layout->files()->saveMany($filetosave);
                 return view('backoffice.layoutDashboard.update', ['success' => 1,'item'=>$layout,'users'=>$users]);
@@ -194,11 +209,13 @@ class LayoutController extends Controller
      */
     public function destroy(Request $request, Layout $layout)
     {
+        $this->authorize('destroy',$layout);
         $request->validate($this->rules_delete);
         $layout = $layout->find((int) $request->id);
         if ($layout->id)
             {
-                $layout->user()->delete();
+                $layout->user()->detach();
+                $layout->files()->detach();
                 $layout->files()->delete();
                 $layout->delete();
             }
@@ -210,16 +227,18 @@ class LayoutController extends Controller
      * @param  \App\models\Layout  $layout
      * @return \Illuminate\Http\Response
      */
-    public function moveToProductation(Request $request, Layout $layout)
+    public function sendIntoProduction(Request $request, Layout $layout)
     {
+        $this->authorize('factory',$layout);
         $request->validate($this->rules_delete);
         $layout = $layout->find((int) $request->id);
         if ($layout->id)
             {
-                $layout->user()->delete();
-                $layout->files()->delete();
-                $layout->delete();
+                $layout->final = 1;
+                $layout->status = 'make';
+                $layout->save();
             }
+        else redirect(route('dashboard'));
         return redirect(route('manageLayout',$layout->id));
     }
 }

@@ -42,6 +42,11 @@
           </div>
           <!-- warning allert -->
           @endif
+          <div class="alert alert-success alert-dismissible" style="display: none" id="fileC">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-exclamation"></i></h4>
+            File selezionati
+        </div>
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">News</h3>
@@ -62,7 +67,7 @@
                 <div class="input-group">
                   <div class="custom-file">
                     <label class="custom-file-label" for="principalImage">Scegli immagine</label>
-                    <input required type="file" name="principalImage" class="custom-file-input @error('principalImage') is-invalid @enderror" id="principalImage">
+                    <input required type="file" onchange="check()" name="principalImage" class="custom-file-input @error('principalImage') is-invalid @enderror" id="principalImage">
                   </div>
                 </div>
               </div>

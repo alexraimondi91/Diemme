@@ -43,6 +43,11 @@
           </div>
           <!-- warning allert -->
           @endif
+          <div class="alert alert-success alert-dismissible" style="display: none" id="fileC">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h4><i class="icon fa fa-exclamation"></i></h4>
+            File selezionati
+        </div>
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">Prodotto</h3>
@@ -65,7 +70,7 @@
                 <div class="input-group">
                   <div class="custom-file">
                     <label class="custom-file-label" for="principalImage">Scegli immagine max 1MB</label>
-                  <input type="file" name="principalImage" class="custom-file-input" id="principalImage">
+                  <input type="file" onchange="check()" name="principalImage" class="custom-file-input" id="principalImage">
                   </div>
                 </div>
               </div>

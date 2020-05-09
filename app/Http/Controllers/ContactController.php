@@ -13,7 +13,7 @@ class ContactController extends Controller
     protected $rules = [
         'name' => 'required',
         'message' => 'required',
-        'email' => 'required|email',
+        'email' => 'required|email|blacklist',
         'subject' => 'required'
     ];
 
@@ -57,6 +57,7 @@ class ContactController extends Controller
      */
     public function backofficeContact(Contact $contact)
     {
+        $this->authorize('backofficeContact',$contact);
         $collection = $contact::all();
         return view('/backoffice/contactDashboard/update', ['collection' => $collection]);
     }
@@ -74,6 +75,7 @@ class ContactController extends Controller
         //$this->validate($request, $this->rulesupdate);
         
         $contact::find(1);
+        $this->authorize('store',$contact);
         $contact->exists=true;
         $contact->id =1;
         $contact->name = $request->name;

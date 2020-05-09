@@ -29,7 +29,7 @@
 			</div>
 			<div class="col-xl-5 offset-xl-1 col-md-6">
 				<div class="single_project_thumb">
-					<img src="{{$item->path}}" alt="">
+					<img src="{{asset($item->path)}}" alt="">
 				</div>
 			</div>
 		</div>

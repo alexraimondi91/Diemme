@@ -43,7 +43,7 @@ class NewsController extends Controller
     public function index(Index $index)
     {
         $collection = $index->orderBy('created_at', 'desc')->paginate(4);
-        return view('/frontoffice/news/multi/multi', ['collection' => $collection]);
+        return view('frontoffice.news.multi.multi', ['collection' => $collection]);
     }
 
     /**
@@ -54,6 +54,7 @@ class NewsController extends Controller
      */
     public function manage(Index $index)
     {
+        $this->authorize('manage',$index);
         $collection = $index->orderBy('created_at', 'desc')->paginate(5);
         return view('backoffice.newsDashboard.manage', ['collection' => $collection]);
     }
@@ -66,6 +67,7 @@ class NewsController extends Controller
      */
     public function destroy(Request $request, Index $index)
     {
+        $this->authorize('destroy',$index);
         $request->validate($this->rules_delete);
         $index = $index->find((int)$request->id);
         if(isset($index->id))
@@ -116,8 +118,9 @@ class NewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Index $news)
     {
+        $this->authorize('store',$news);
         $request->validate($this->rules, $this->errorMessages_update);
         $detail = $request->summernoteInput;
         $dom = new Dom;
@@ -171,6 +174,7 @@ class NewsController extends Controller
      */
     public function updateView(Request $request,Index $news)
     {
+        $this->authorize('updateView',$news);
         $request->validate($this->rules_delete);
         $item = $news::find($request->id);
         return view('backoffice.newsDashboard.update', ['item' => $item]);
@@ -185,6 +189,7 @@ class NewsController extends Controller
      */
     public function update(Request $request, Index $news)
     {
+        $this->authorize('update',$news);
         $request->validate($this->rules_update, $this->errorMessages_update);
         $detail = $request->summernoteInput;
         $dom = new Dom;

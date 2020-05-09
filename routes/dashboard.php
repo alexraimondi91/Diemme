@@ -1,4 +1,6 @@
 <?php
+
+use App\models\Index;
 use Illuminate\Http\Request;
 
 /*
@@ -18,7 +20,7 @@ Route::get('', 'HomeController@index')->name('dashboard');
 
 Route::prefix('news')->group(function () {
 
-    Route::view('/create','backoffice.newsDashboard.create')->name('createNews');
+    Route::view('/create','backoffice.newsDashboard.create')->name('createNews')->middleware('can:store,App\models\Index');
 
     // updatesingle route view
     Route::get('/updateView','NewsController@updateView')->name('updateNews');
@@ -36,7 +38,7 @@ Route::prefix('news')->group(function () {
 
 Route::prefix('/prodotti')->group(function () {
 
-    Route::view('/create','backoffice.ProductDashboard.create')->name('createProduct');
+    Route::view('/create','backoffice.ProductDashboard.create')->name('createProduct')->middleware('can:store,App\models\Product');
     // updatesingle route view
     Route::get('/updateView','ProductController@updateView')->name('updateProduct');
 
@@ -52,7 +54,7 @@ Route::prefix('/prodotti')->group(function () {
 
 Route::prefix('/tecnologie')->group(function () {
 
-    Route::view('/create','backoffice.TechnologyDashboard.create')->name('createTechnology');
+    Route::view('/create','backoffice.TechnologyDashboard.create')->name('createTechnology')->middleware('can:store,App\models\Technology');
     // updatesingle route view
     Route::get('/updateView','TechnologyController@updateView')->name('updateTechnology');
 
@@ -68,7 +70,7 @@ Route::prefix('/tecnologie')->group(function () {
 
 Route::prefix('/preventivi')->group(function () {
 
-    Route::view('/create','backoffice.QuotationDashboard.create')->name('createQuotation');
+    Route::view('/create','backoffice.QuotationDashboard.create')->name('createQuotation')->middleware('can:store,App\models\Quotation');
 
     // updatesingle route view
     Route::get('/updateView','QuotationController@updateView')->name('updateQuotation');
@@ -112,7 +114,7 @@ Route::prefix('/layout')->group(function () {
 
     Route::get('/manage','LayoutController@manage')->name('manageLayout');
 
-    Route::view('/create','backoffice.layoutDashboard.create')->name('createLayout');
+    Route::view('/create','backoffice.layoutDashboard.create')->name('createLayout')->middleware('can:store,App\models\Layout');
     
     Route::post('/create','LayoutController@store')->name('createLayoutPersist');
 
@@ -121,7 +123,11 @@ Route::prefix('/layout')->group(function () {
     // updatesingle route
     Route::post('/update','LayoutController@update')->name('updateLayoutPersist');
 
-    Route::get('/show','LayoutController@show')->name('showLayout');
+    Route::get('/show','LayoutController@index')->name('showLayouts');
+
+    Route::get('/showSingle','LayoutController@show')->name('showLayout');
+    
+    Route::post('/sendIntoProduction','LayoutController@sendIntoProduction')->name('sendIntoProduction');
     
 });
 
@@ -167,5 +173,12 @@ Route::prefix('/factory')->group(function () {
     Route::post('/rollback','FactoryController@rollback')->name('rollbackProduct');
 
     Route::post('/tosend','FactoryController@toSend')->name('sendProduct');
+    
+});
+Route::prefix('/order')->group(function () {
+
+    Route::get('/','LayoutController@orderStateTot')->name('statusOrder');
+
+    Route::get('/status','LayoutController@orderStateSingle')->name('statusOrderCustomer');
     
 });

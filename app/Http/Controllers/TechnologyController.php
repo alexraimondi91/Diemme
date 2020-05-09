@@ -59,6 +59,7 @@ class TechnologyController extends Controller
      */
     public function manage(Technology $technology)
     {
+        $this->authorize('manage',$technology);
         $collection = $technology->orderBy('created_at', 'desc')->paginate(5);
         return view('backoffice.technologyDashboard.manage', ['collection' => $collection]);
     }
@@ -71,6 +72,7 @@ class TechnologyController extends Controller
      */
     public function destroy(Request $request, Technology $technology)
     {
+        $this->authorize('destroy',$technology);
         $request->validate($this->rules_delete, $this);
         $technology = $technology->find((int) $request->id);
         if (isset($technology->id))
@@ -86,6 +88,7 @@ class TechnologyController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('store',$technology);
         $request->validate($this->rules_update, $this->errorMessages_update);
         $technology = new Technology;
         $technology->user_id = Auth::user()->id;
@@ -114,6 +117,7 @@ class TechnologyController extends Controller
      */
     public function updateView(Request $request,Technology $technology)
     {
+        $this->authorize('updateView',$technology);
         $request->validate($this->rules_delete);
         $item = $technology::find($request->id);
         return view('backoffice.technologyDashboard.update', ['item' => $item]);
@@ -128,6 +132,7 @@ class TechnologyController extends Controller
      */
     public function update(Request $request, Technology $technology)
     {
+        $this->authorize('update',$technology);
         $request->validate($this->rules, $this->errorMessages);
         $technology = $technology->find((int)$request->id);
         $technology->exists=true;

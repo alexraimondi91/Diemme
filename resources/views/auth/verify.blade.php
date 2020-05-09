@@ -15,13 +15,13 @@
               Un link di verifica è stata inviata alla tua casella email
           </div>
           @endif
-          <p>Prima di provcedere, per favore verifica la tua casella email per il link di verifica</p>
-          <p>Se non hai ricevuto la email provedi</p>
+          <p>Per poter completare la registrazione è necessario verificare la tua email </p>
+          <p>Se non hai ancora ricevuto una mail di conferma clicca sul bottone sottostante</p>
           <form action="{{ route('verification.resend') }}" method="post">
             @csrf
             <div class="row">
               <div class="col-12">
-                <button type="submit" class="btn btn-primary btn-block">Effettua nuovamente la richiesta</button>
+                <button type="submit" class="btn btn-primary btn-block">Invia nuova mail di verifica</button>
               </div>
               <!-- /.col -->
             </div>

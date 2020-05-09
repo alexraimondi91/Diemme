@@ -36,6 +36,7 @@
                                         <th style="width: 10px">#</th>
                                         <th>Nome</th>
                                         <th>Cognome</th>
+                                        <th>email</th>
                                         <th>Tipo utente</th>
                                         <th>Data Creazione</th>
                                         <th>Data Aggiornameto</th>
@@ -50,6 +51,7 @@
                                         <td>{{$item->id}}</td>
                                         <td>{{$item->name_user}}</td>
                                         <td>{{$item->surname_user}}</td>
+                                        <td>{{$item->email}}</td>
                                         <td>{{$item->group->name}}</td>
                                         <td>{{$item->created_at->diffForHumans()}}</td>
                                         <td>{{$item->updated_at->diffForHumans()}}</td>

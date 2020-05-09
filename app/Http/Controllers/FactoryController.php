@@ -14,8 +14,9 @@ class FactoryController extends Controller
      */
     public function index(Layout $layout)
     {
+        $this->authorize('factory_index',$layout);
         $collection = $layout
-        ->where('final','!=','1')
+        ->where('final','=','1')
         ->where('status','=',"make")
         ->orderBy('created_at', 'desc')->paginate(5);
         return view('backoffice.factoryDashboard.manage', ['collection' => $collection]);
@@ -30,6 +31,7 @@ class FactoryController extends Controller
     {
         //
         $layout = $layout->find((int)$request->id);
+        $this->authorize('factory',$layout);
         $layout->exists = true;
         $layout->id = $request->id;
         $layout->status = 'send';
@@ -47,55 +49,12 @@ class FactoryController extends Controller
     {
         //
         $layout = $layout->find((int)$request->id);
+        $this->authorize('factory',$layout);
         $layout->exists = true;
         $layout->id = $request->id;
+        $layout->final = 0;
         $layout->status = null;
         $layout->save();
         return redirect(route('makeList'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

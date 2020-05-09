@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\models\auth\Group;
 use App\models\auth\Service;
+use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
 {
@@ -27,7 +28,8 @@ class GroupController extends Controller
      */
     public function index(Request $request,Group $group)
     {
-        $collection = $group->where('id','>',4)->paginate(5);
+        $this->authorize('index',$group);
+        $collection = $group->where('id','!=',4)->paginate(5);
         return view('backoffice.serviceDashboard.manage', ['collection' => $collection]);
     }
 
@@ -39,6 +41,7 @@ class GroupController extends Controller
      */
     public function create(Service $service)
     {
+        $this->authorize('create',$service);
         $collection = $service->all();
         return view('backoffice.serviceDashboard.create',['collection'=>$collection]);
     }
@@ -51,6 +54,7 @@ class GroupController extends Controller
      */
     public function store(Request $request, Group $group,Service $service)
     {
+        $this->authorize('store',$group);
         $request->validate($this->rules,$this->message);
         $group->name = $request->name;
         $group->save();
@@ -67,22 +71,12 @@ class GroupController extends Controller
      */
     public function updateView(Request $request,Group $group,Service $service)
     {
+        $this->authorize('updateView',$group);
         $request->validate($this->rules_delete);
         $group = $group::find((int) $request->id);
         $collection = $service->all();
-        $active = $group->services()->get();
+        $active = $group->services()->orderBy('id','asc')->get();
         return view('backoffice.serviceDashboard.update', ['group' => $group,'collection'=>$collection,'active'=>$active]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -94,6 +88,7 @@ class GroupController extends Controller
      */
     public function update(Request $request, Group $group,Service $service)
     {
+        $this->authorize('update',$group);
         $request->validate($this->rules_delete);
         $group = $group::find((int) $request->id);
         $group->services()->sync($request->service);
@@ -110,6 +105,7 @@ class GroupController extends Controller
      */
     public function destroy(Request $request,Group $group,Service $service)
     {
+        $this->authorize('destroy',$group);
         $request->validate($this->rules_delete);
         $group = $group->find((int) $request->id);
         if ($group->id && $request->id!=1 && $request->id!=4)

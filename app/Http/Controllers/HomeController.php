@@ -26,13 +26,13 @@ class HomeController extends Controller
     public function index(Layout $layout, User $user)
     {
         foreach(Auth::user()->serviceHave() as $item)
-        switch($item['name']){
-            case 'privilege_dashboard': 
-                $collection1 = $layout->whereYear('status', '=', 3)->get();
+        switch($item['id']){
+            case 1: 
+                $collection1 = $layout->whereYear('status', '=', 'send')->get();
                 $collection2 = $user->whereYear('created_at', '=', date('Y'))->get();
                 return view('backoffice/dashboard/dashboardPrivilege',
                 ['collection1'=>$collection1, 'collection2'=>$collection2]);
-            case 'client_dashboard': 
+            case 14: 
                 return view('backoffice/dashboard/dashboardClient');
             default: 
                 return view('backoffice/dashboard/dashboard');

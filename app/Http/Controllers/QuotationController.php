@@ -48,6 +48,7 @@ class QuotationController extends Controller
     public function manage(Quotation $quotation)
     {
         $collection = $quotation->orderBy('created_at', 'desc')->paginate(5);
+        $this->authorize('manage',Quotation::class);
         return view('backoffice.quotationDashboard.manage', ['collection' => $collection]);
     }
 
@@ -59,6 +60,7 @@ class QuotationController extends Controller
      */
     public function destroy(Request $request, Quotation $quotation)
     {
+        $this->authorize('destroy',$quotation);
         $request->validate($this->rules_delete);
         $quotation = $quotation->find((int)$request->id);
         if(isset($quotation->id))
@@ -75,7 +77,7 @@ class QuotationController extends Controller
      */
     public function store(Request $request)
     {
-
+        $this->authorize('store',$quotation);
         $this->validate($request, $this->rules);
         $quotation = new Quotation;
         $quotation->user_id = Auth::user()->id;
@@ -94,6 +96,7 @@ class QuotationController extends Controller
      */
     public function updateView(Request $request,Quotation $quotation)
     {
+        $this->authorize('updateView',$quotation);
         $request->validate($this->rules_delete);
         $item = $quotation::find($request->id);
         return view('backoffice.quotationDashboard.update', ['item' => $item]);
@@ -108,6 +111,7 @@ class QuotationController extends Controller
      */
     public function update(Request $request, Quotation $quotation)
     {
+        $this->authorize('update',$quotation);
         $request->validate($this->rules_update, $this->errorMessages_update);
         $quotation = $quotation->find((int)$request->id);
         $quotation->exists=true;

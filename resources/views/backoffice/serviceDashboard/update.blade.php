@@ -49,11 +49,14 @@
                                         <!-- checkbox -->
                                         <div class="form-group">
                                             <label>Servizi abilitati </label>
-                                            @if($collection ?? '' && $active ?? '')
+                                            @if($collection && $active ?? '')
                                             @foreach ($collection as $key=>$item)
                                             <div class="form-check">
-                                                <input name="service[]" value="{{$item->id}}" @if($active[$key] ?? '' &&
-                                                    $active[$key]==$item->value) checked @endif class="form-check-input"
+                                                <input name="service[]" value="{{$item->id}}" 
+                                                @if($active ?? '') @foreach ($active as $a) @if ($a->id == $item->id)
+                                                        checked
+                                                @endif             @endforeach              @endif 
+                                                class="form-check-input"
                                                 type="checkbox">
                                                 <label class="form-check-label">{{$item->name}}</label>
                                             </div>

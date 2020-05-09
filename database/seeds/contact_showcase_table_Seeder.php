@@ -25,7 +25,7 @@ class contact_showcase_table_Seeder extends Seeder
             'number'=>$faker->phoneNumber,
             'lat'=>'45',
             'long'=>'45',
-            'user_id'=>rand(0,10),
+            'user_id'=>rand(1,10),
             'created_at'=>Carbon::now(),
             'updated_at'=>Carbon::now()
         ]);

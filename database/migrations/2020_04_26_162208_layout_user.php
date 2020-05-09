@@ -17,9 +17,11 @@ class LayoutUser extends Migration
             
             $table->integer('layout_id')->unsigned()->index();
             $table->foreign('layout_id')->on('layout')->references('id')
+            ->onDelete('cascade')
             ->onUpdate('cascade');
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->on('users')->references('id')
+            ->onDelete('cascade')
             ->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();

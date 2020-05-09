@@ -93,6 +93,10 @@
     // Summernote
     $('.textarea').summernote()
   })
+  function check(){
+  if(document.getElementById('exampleInputFile').files.length)
+    $("#fileC").show()
+  }
 </script>
 
 </body>

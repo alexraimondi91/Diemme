@@ -49,7 +49,7 @@
                                         <td>{{$item->created_at->diffForHumans()}}</td>
                                         <td>{{$item->updated_at->diffForHumans()}}</td>
                                         <td>
-                                            <form method="POST" action="">
+                                            <form method="post" action="{{route('rollbackProduct')}}">
                                                 @csrf
                                                 <input name="id" hidden value="{{$item->id}}">
                                                 <button type="submit" class="btn btn-danger">
@@ -57,10 +57,11 @@
                                                 </button>
                                             </form>
                                             <hr>
-                                            <form method="GET" action="">
+                                            <form method="post" action="{{route('sendProduct')}}">
+                                                @csrf
                                                 <input name="id" hidden value="{{$item->id}}">
                                                 <button type="submit" class="btn btn-success">
-                                                    Prodotto e in spedizione
+                                                    Ordine realizzato e in spedizione
                                                 </button>
                                             </form>
                                         </td>

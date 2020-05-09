@@ -56,6 +56,7 @@ class UserManageController extends Controller
      */
     public function index(User $users)
     {
+        $this->authorize('index',$users);
         $collection = $users->orderBy('created_at', 'desc')->with('group')->paginate(5);
         return view('backoffice.userManage.manage', ['collection' => $collection]);
     }
@@ -65,8 +66,9 @@ class UserManageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Group $group)
+    public function create(User $user,Group $group)
     {
+        $this->authorize($user);
         $collection = $group->all();
         return view('backoffice.userManage.create',['collection'=>$collection]);
     }
@@ -79,6 +81,7 @@ class UserManageController extends Controller
      */
     public function store(Request $request,User $user,Group $group)
     {
+        $this->authorize('store',$user);
         $request->validate($this->rules,$this->message);
         $user->name_user = $request->name_user;
         $user->surname_user = $request->surname_user;
@@ -96,17 +99,6 @@ class UserManageController extends Controller
         return view('backoffice.userManage.create',['collection'=>$collection,'success'=>1]);
 
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
     /**
      * Display the specified resource to update.
      *
@@ -115,6 +107,7 @@ class UserManageController extends Controller
      */
     public function updateView(Request $request,User $user,Group $group)
     {
+        $this->authorize('updateView',$user);
         $request->validate($this->rules_delete);
         $item = $user->find((int)$request->id);
         $collection = $group->all();
@@ -130,6 +123,7 @@ class UserManageController extends Controller
      */
     public function update(Request $request, User $user,Group $group)
     {
+        $this->authorize('update',$user);
         $request->validate($this->rules_update);
         $user->id = $request->id;
         $user->exists = true;
@@ -156,6 +150,7 @@ class UserManageController extends Controller
     public function destroy(Request $request,User $user)
     {
         //
+        $this->authorize('destroy',$user);
         $request->validate($this->rules_delete);
         $user = $user->find((int) $request->id);
         $user->forceDelete();

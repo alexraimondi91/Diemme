@@ -14,7 +14,7 @@ class CreateFileLayoutsTable extends Migration
     public function up()
     {
         Schema::create('file_layouts', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->Increments('id');
             $table->string('path');
             $table->timestamps();
         });

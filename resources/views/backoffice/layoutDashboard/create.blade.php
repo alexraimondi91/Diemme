@@ -50,6 +50,11 @@
             </div>
             <!-- warning allert -->
             @endif
+            <div class="alert alert-success alert-dismissible" style="display: none" id="fileC">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-exclamation"></i></h4>
+                File selezionati
+            </div>
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1>Layout</h1>
@@ -98,7 +103,7 @@
                                 <label for="exampleInputFile">Immagini di Layout</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" name="file[]" multiple class="custom-file-input"
+                                        <input type="file" onchange="check()" name="file[]" multiple class="custom-file-input"
                                             id="exampleInputFile">
                                         <label class="custom-file-label" for="exampleInputFile">Scegli i file d'immagine
                                             da caricare</label>
