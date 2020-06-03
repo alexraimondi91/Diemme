@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\models\Index;
 use App\User;
+use Exception;
 use PHPHtmlParser\Dom;
 use Illuminate\Support\Facades\Auth;
 
@@ -42,8 +43,12 @@ class NewsController extends Controller
      */
     public function index(Index $index)
     {
-        $collection = $index->orderBy('created_at', 'desc')->paginate(4);
-        return view('frontoffice.news.multi.multi', ['collection' => $collection]);
+        try
+        {$collection = $index->orderBy('created_at', 'desc')->paginate(4);
+        return view('frontoffice.news.multi.multi', ['collection' => $collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -54,9 +59,13 @@ class NewsController extends Controller
      */
     public function manage(Index $index)
     {
-        $this->authorize('manage',$index);
+        try
+        {$this->authorize('manage',$index);
         $collection = $index->orderBy('created_at', 'desc')->paginate(5);
-        return view('backoffice.newsDashboard.manage', ['collection' => $collection]);
+        return view('backoffice.newsDashboard.manage', ['collection' => $collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -67,12 +76,16 @@ class NewsController extends Controller
      */
     public function destroy(Request $request, Index $index)
     {
-        $this->authorize('destroy',$index);
+        try
+       { $this->authorize('destroy',$index);
         $request->validate($this->rules_delete);
         $index = $index->find((int)$request->id);
         if(isset($index->id))
             $index->delete(); 
-        return redirect(route('manageNews'));
+        return redirect(route('manageNews'));}
+        catch(Exception $e){
+            abort(404);
+        }
 
     }
     
@@ -84,13 +97,17 @@ class NewsController extends Controller
      */
     public function show_filter(Request $request, Index $index)
     {
-        $filter = $request->input('filter');
+        try
+       { $filter = $request->input('filter');
         $filter = preg_replace('/^[a-z0-9_-]{1,60}$/', '', $filter);
         if ($filter == '')
             $filter = 1;
         $collection = $index->where('name', $filter)
             ->orWhere('name', 'like', '%' . $filter . '%')->paginate(4);
-        return view('/frontoffice/news/multi/multi', ['collection' => $collection]);
+        return view('/frontoffice/news/multi/multi', ['collection' => $collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -105,11 +122,15 @@ class NewsController extends Controller
         //$collection = $index->find($id);
         //$user = $collection->$user;
         //return view('/frontoffice/news/singola/singola', ['collection' => $collection, 'user' => $user]);
-        $id = preg_replace('/[^0-9]/', '', $id);
+        try
+        {$id = preg_replace('/[^0-9]/', '', $id);
         if ($id == '')
             $id = 1;
         $collection = $index->with('user')->find($id);
-        return view('/frontoffice/news/singola/singola', ['collection' => $collection]);
+        return view('/frontoffice/news/singola/singola', ['collection' => $collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -120,7 +141,8 @@ class NewsController extends Controller
      */
     public function store(Request $request,Index $news)
     {
-        $this->authorize('store',$news);
+        try
+        {$this->authorize('store',$news);
         $request->validate($this->rules, $this->errorMessages_update);
         $detail = $request->summernoteInput;
         $dom = new Dom;
@@ -162,7 +184,10 @@ class NewsController extends Controller
             }
             else return view('backoffice.newsDashboard.create', ['warning' => 1]);
         }
-        return view('backoffice.newsDashboard.create', ['warning' => 1]);
+        return view('backoffice.newsDashboard.create', ['warning' => 1]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -174,10 +199,14 @@ class NewsController extends Controller
      */
     public function updateView(Request $request,Index $news)
     {
-        $this->authorize('updateView',$news);
+        try
+        {$this->authorize('updateView',$news);
         $request->validate($this->rules_delete);
         $item = $news::find($request->id);
-        return view('backoffice.newsDashboard.update', ['item' => $item]);
+        return view('backoffice.newsDashboard.update', ['item' => $item]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
      /**
@@ -189,7 +218,8 @@ class NewsController extends Controller
      */
     public function update(Request $request, Index $news)
     {
-        $this->authorize('update',$news);
+        try
+        {$this->authorize('update',$news);
         $request->validate($this->rules_update, $this->errorMessages_update);
         $detail = $request->summernoteInput;
         $dom = new Dom;
@@ -236,4 +266,8 @@ class NewsController extends Controller
         $news->save();
         return view('backoffice.newsDashboard.update', ['success' => 1,'item'=>$news]);
     }
+    catch(Exception $e){
+        abort(404);
+    }
+}
 }

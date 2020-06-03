@@ -33,7 +33,7 @@ class CantactMail extends Mailable
     {
         return $this->view('mails.testemail')
         ->with(['username'=>$this->emailName,'emailMessagge'=>$this->emailMessage,'emailAddress'=>$this->emailAddress])
-        ->to('alex_994@ymail.com')
+        ->to('info@diemmesport.it')
         ->from('provider@diemmesport.it');
     }
 }

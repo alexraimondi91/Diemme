@@ -27,9 +27,6 @@ class DatabaseSeeder extends Seeder
             quotation_showcase_table_Seeder::class,
             contact_showcase_table_Seeder::class,
             news_showcase_table_Seeder::class,
-            user_chat_table_Seeder::class,
-            chat_table_Seeder::class,
-            attachment_chat_table_Seeder::class,
             
         ]);
     }

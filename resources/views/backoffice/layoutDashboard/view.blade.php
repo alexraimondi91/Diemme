@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-6">
                     <h3 class="d-inline-block d-sm-none">{{$item->name}}</h3>
-                        <div class="col-12">
+                    <div class="col-12">
                     @foreach ($photos as $key=>$photo)
                     @if ($key==0)
                         <img src="{{asset($photo->path)}}" class="product-image" alt="Product Image">
@@ -45,7 +45,11 @@
                         
                     </div>
                     <div class="col-12 col-sm-6">
-                        <h3 class="my-3">{{$item->name}}</h3>
+                        <h3 class="my-3">{{$item->name}}</h3> 
+                        @if($users ?? '') @foreach ($users as $user)
+                        <i class="fas fa-user"></i>
+                            {{$user->name_user}} {{$user->surname_user}} &nbsp;
+                        @endforeach @endif
                         <hr>
                         <p>{{$item->description}}</p>
                     </div>

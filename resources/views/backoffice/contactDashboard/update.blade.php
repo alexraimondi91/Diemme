@@ -40,7 +40,7 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label>Slogan</label>
-                                        <input type="text" name="name" class="form-control" value="{{$item->name}}">
+                                        <input required type="text" name="name" class="form-control" value="{{$item->name}}">
                                         </div>
                                     </div>
                                 </div>
@@ -49,7 +49,7 @@
                                         <!-- textarea -->
                                         <div class="form-group">
                                             <label>Descrizione Società</label>
-                                        <textarea class="form-control" name="text" rows="3">{{$item->text}}</textarea>
+                                        <textarea required class="form-control" name="text" rows="3">{{$item->text}}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -58,7 +58,7 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label>Email</label>
-                                        <input type="email" maxlength="40" name="email" class="form-control" value="{{$item->email}}">
+                                        <input required type="email" maxlength="40" name="email" class="form-control" value="{{$item->email}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
@@ -74,14 +74,14 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label>Regione</label>
-                                        <input type="text"  class="form-control" name="region" value="{{$item->region}}">
+                                        <input required type="text"  class="form-control" name="region" value="{{$item->region}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label>Nazione</label>
-                                            <input type="text" class="form-control" name="nation" value="{{$item->nation}}">
+                                            <input required type="text" class="form-control" name="nation" value="{{$item->nation}}">
                                         </div>
                                     </div>
                                 </div>
@@ -90,7 +90,7 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label>Via</label>
-                                            <input type="text"  class="form-control" name="street" value="{{$item->street}}">
+                                            <input required type="text"  class="form-control" name="street" value="{{$item->street}}">
                                         </div>
                                     </div>
                                 </div>
@@ -99,14 +99,14 @@
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label>Latitudine</label>
-                                            <input type="number" maxlength="40" name="lat" class="form-control" value="{{$item->lat}}">
+                                            <input required type="text" maxlength="40" name="lat" class="form-control" value="{{$item->lat}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <!-- text input -->
                                         <div class="form-group">
                                             <label>Logitudine</label>
-                                            <input type="number" maxlength="40" name="long" class="form-control" value="{{$item->long}}">
+                                            <input  required type="text" maxlength="40" name="long" class="form-control" value="{{$item->long}}">
                                         </div>
                                     </div>
                                 </div>

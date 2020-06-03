@@ -15,7 +15,7 @@
             @if($collection ?? '')
             @foreach ($collection as $item)
             <iframe
-                src="https://www.google.com/maps/embed/v1/place?q={{$item->lat}},{{$item->long}}&amp;key=APIGOOGLEkey"
+                src="https://www.google.com/maps/embed/v1/place?q={{$item->lat}},{{$item->long}}&amp;key=AIzaSyC-q0iUkwz8yDkkoSNhx2rtWWqh8FfnkHA"
                 width="100%" height="400" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
         </div>
         <div class="row">

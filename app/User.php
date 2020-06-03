@@ -3,11 +3,13 @@
 namespace App;
 
 use App\models\auth\Group;
+use App\models\Chat;
 use App\models\Layout;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -56,6 +58,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Layout::class);
     }
 
+    public function chats()
+    {
+        return $this->belongsToMany(Chat::class,'messages','id_user', 'id_chat');
+    }
+
     public static function forService(){
         return DB::table('users')
         ->join('group', 'group.id', '=', 'users.group_id')
@@ -63,5 +70,8 @@ class User extends Authenticatable implements MustVerifyEmail
         ->join('service', 'service.id', '=', 'group_service.service_id')
         ->select('service.*')
         ->select('users.*');
+    }
+    public function sendToProduction(){
+        return $this->serviceHave()->where('id','=','12')->count()>=1;
     }
 }

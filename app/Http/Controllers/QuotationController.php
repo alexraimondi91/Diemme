@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\models\Quotation;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,15 +19,12 @@ class QuotationController extends Controller
     ];
 
     protected $rules_update = [
-        'id' => 'requires|integer',
+        'id' => 'required|integer',
         'title' => 'required|max:100',
         'description' => 'required|max:400'
     ];
 
-    protected $errorMessages = [
-        'title.required' => 'Il campo Titolo è obbligatorio',
-        'dascription.required' =>'Il campo Descrizione è obbligatorio',
-    ];
+    
 
     /**
      * Display the specified resource.
@@ -36,8 +34,12 @@ class QuotationController extends Controller
      */
     public function index(Quotation $quotation)
     {
-        $collection = $quotation::all();
-        return view('/frontoffice/preventivi/preventivi',['collection' => $collection]);
+        try
+        {$collection = $quotation::all();
+        return view('/frontoffice/preventivi/preventivi',['collection' => $collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
     /**
      * Display a listing of the resource.
@@ -47,9 +49,13 @@ class QuotationController extends Controller
      */
     public function manage(Quotation $quotation)
     {
-        $collection = $quotation->orderBy('created_at', 'desc')->paginate(5);
+        try
+        {$collection = $quotation->orderBy('created_at', 'desc')->paginate(5);
         $this->authorize('manage',Quotation::class);
-        return view('backoffice.quotationDashboard.manage', ['collection' => $collection]);
+        return view('backoffice.quotationDashboard.manage', ['collection' => $collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -60,13 +66,16 @@ class QuotationController extends Controller
      */
     public function destroy(Request $request, Quotation $quotation)
     {
-        $this->authorize('destroy',$quotation);
+        try
+       { $this->authorize('destroy',$quotation);
         $request->validate($this->rules_delete);
         $quotation = $quotation->find((int)$request->id);
         if(isset($quotation->id))
             $quotation->delete(); 
-        return redirect(route('manageQuotation'));
-
+        return redirect(route('manageQuotation'));}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -75,16 +84,19 @@ class QuotationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Quotation $quotation)
     {
-        $this->authorize('store',$quotation);
+        try
+        {$this->authorize('store',$quotation);
         $this->validate($request, $this->rules);
-        $quotation = new Quotation;
         $quotation->user_id = Auth::user()->id;
         $quotation->name = $request->title;
         $quotation->description = ($request->description);
         $quotation->save();
-        return view('backoffice.quotationDashboard.create', ['success' => 1]);
+        return view('backoffice.quotationDashboard.create', ['success' => 1]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -96,10 +108,14 @@ class QuotationController extends Controller
      */
     public function updateView(Request $request,Quotation $quotation)
     {
-        $this->authorize('updateView',$quotation);
+        try
+        {$this->authorize('updateView',$quotation);
         $request->validate($this->rules_delete);
         $item = $quotation::find($request->id);
-        return view('backoffice.quotationDashboard.update', ['item' => $item]);
+        return view('backoffice.quotationDashboard.update', ['item' => $item]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -111,8 +127,9 @@ class QuotationController extends Controller
      */
     public function update(Request $request, Quotation $quotation)
     {
-        $this->authorize('update',$quotation);
-        $request->validate($this->rules_update, $this->errorMessages_update);
+        try
+       { $this->authorize('update',$quotation);
+        $request->validate($this->rules_update);
         $quotation = $quotation->find((int)$request->id);
         $quotation->exists=true;
         $quotation->id = $request->id;
@@ -120,6 +137,9 @@ class QuotationController extends Controller
         $quotation->name = $request->title;
         $quotation->description = $request->description;
         $quotation->save();
-        return view('backoffice.quotationDashboard.update', ['success' => 1,'item'=>$quotation]);
+        return view('backoffice.quotationDashboard.update', ['success' => 1,'item'=>$quotation]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 }

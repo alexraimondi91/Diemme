@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\CantactMail;
 use App\models\Contact;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
@@ -25,8 +26,12 @@ class ContactController extends Controller
      */
     public function index(Contact $contact)
     {
-        $collection = $contact::all();
-        return view('frontoffice.contatti.contatti', ['collection' => $collection]);
+        try
+        {$collection = $contact::all();
+        return view('frontoffice.contatti.contatti', ['collection' => $collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
     /**
      * Send email
@@ -37,7 +42,8 @@ class ContactController extends Controller
      */
     public function send(Request $request, Contact $contact)
     {
-        $emailName = $request->input('name');
+        try 
+        {$emailName = $request->input('name');
         $emailMessage = $request->input('message');
         $emailAddress = $request->input('email');
         $emailSubject = $request->input('subject');
@@ -46,7 +52,10 @@ class ContactController extends Controller
             return view('frontoffice.contatti.contatti', ['collection' => $collection]);
         $mail = new CantactMail($emailAddress, $emailMessage, $emailName, $emailSubject);
         Mail::to($emailAddress)->send($mail);
-        return view('frontoffice.contatti.contatti', ['collection' => $collection, 'send' => 1]);
+        return view('frontoffice.contatti.contatti', ['collection' => $collection, 'send' => 1]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -57,9 +66,13 @@ class ContactController extends Controller
      */
     public function backofficeContact(Contact $contact)
     {
-        $this->authorize('backofficeContact',$contact);
+        try
+        {$this->authorize('backofficeContact',$contact);
         $collection = $contact::all();
-        return view('/backoffice/contactDashboard/update', ['collection' => $collection]);
+        return view('/backoffice/contactDashboard/update', ['collection' => $collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -73,8 +86,8 @@ class ContactController extends Controller
     {
 
         //$this->validate($request, $this->rulesupdate);
-        
-        $contact::find(1);
+        try
+        {$contact::find(1);
         $this->authorize('store',$contact);
         $contact->exists=true;
         $contact->id =1;
@@ -90,6 +103,9 @@ class ContactController extends Controller
         $contact->user_id = Auth::user()->id;
         $contact->save();
         $collection = $contact::all();        
-        return view('/backoffice/contactDashboard/update', ['collection' => $collection]);
+        return view('/backoffice/contactDashboard/update', ['collection' => $collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 }

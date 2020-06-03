@@ -28,7 +28,7 @@
           </a>
         </li>
         @foreach ( Auth::user()->serviceHave() as $item)
-        @if ($item['name'] == 'privilege_dashboard' ?? '')
+        @if ($item['id'] == 1 ?? '')
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-user-friends"></i>
@@ -54,7 +54,7 @@
           </ul>
         </li>
         @endif
-        @if ($item['name'] == 'privilege_dashboard' ?? '')
+        @if ($item['id'] == 1 ?? '')
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-lock"></i>
@@ -81,32 +81,7 @@
           </ul>
         </li>
         @endif
-        @if ($item['name'] == 'showcase_quotation' ?? '')
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-project-diagram"></i>
-            <p>
-              Istruzione Preventivi
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{route('createQuotation')}}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Aggiungi istruzione</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{route('manageQuotation')}}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Gestione istruzioni</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-        @endif
-        @if ($item['name'] == 'showcase_news' ?? '')
+        @if ($item['id'] == 2 ?? '')
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-newspaper"></i>
@@ -131,7 +106,7 @@
           </ul>
         </li>
         @endif
-        @if ($item['name'] == 'showcase_product' ?? '')
+        @if ($item['id'] == 3 ?? '')
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-folder-plus"></i>
@@ -156,7 +131,32 @@
           </ul>
         </li>
         @endif
-        @if ($item['name'] == 'showcase_technology' ?? '')
+        @if ($item['id'] == 4 ?? '')
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-project-diagram"></i>
+            <p>
+              Istruzione Preventivi
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{route('createQuotation')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Aggiungi istruzione</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('manageQuotation')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Gestione istruzioni</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+        @endif
+        @if ($item['id'] == 5 ?? '')
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-folder-plus"></i>
@@ -181,7 +181,7 @@
           </ul>
         </li>
         @endif
-        @if ($item['name'] == 'showcase_contact' ?? '')
+        @if ($item['id'] == 6 ?? '')
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-info"></i>
@@ -200,7 +200,15 @@
           </ul>
         </li>
         @endif
-        @if ($item['name'] == 'design_manager' ?? '')
+        @if ($item['id'] == 6 ?? '')
+        <li class="nav-item has-treeview">
+        <a href="{{route('statusOrderCustomer')}}" class="nav-link">
+            <i class="nav-icon fas fa-list"></i>
+            <p>Status Ordini</p>
+        </a>
+        </li>
+        @endif
+        @if ($item['id'] == 7 ?? '')
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-pencil-ruler"></i>
@@ -225,34 +233,32 @@
           </ul>
         </li>
         @endif
-        @if ($item['name'] == 'chat_client' ?? '')
+        @if ($item['id'] == 8 ?? '')
         <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-envelope"></i>
-            <p>
-              Chat con cliente
-              <i class="fas fa-angle-left right"></i>
-            </p>
+        <a href="{{route('showLayouts')}}" class="nav-link">
+            <i class="nav-icon fas fa-image"></i>
+            <p>Progetto Layout</p>
           </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /pages/layout/top-nav.html"
-                class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Inizia chat</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /pages/layout/top-nav-sidebar.html"
-                class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Gestione chat</p>
-              </a>
-            </li>
-          </ul>
         </li>
         @endif
-        @if ($item['name'] == 'factory' ?? '')
+        
+        @if ($item['id'] == 10 ?? '')
+        <li class="nav-item has-treeview">
+        <a href="{{route('statusOrder')}}" class="nav-link">
+            <i class="nav-icon fas fa-list"></i>
+            <p>Status ordini</p>
+        </a>
+        </li>
+        @endif
+        @if ($item['id'] == 11 ?? '')
+        <li class="nav-item has-treeview">
+        <a href="{{route('statusOrderCustomer')}}" class="nav-link">
+            <i class="nav-icon fas fa-list"></i>
+            <p>Status Ordini</p>
+        </a>
+        </li>
+        @endif
+        @if ($item['id'] == 13 ?? '')
         <li class="nav-item has-treeview">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-industry"></i>
@@ -269,46 +275,43 @@
                 <p>Ordini da realizzare</p>
               </a>
             </li>
+          </ul>
+        </li>
+        @endif
+        @if ($item['id'] == 15 || $item['id'] == 9 ?? '')
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-envelope"></i>
+            <p>
+              Chat
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            @if($item['id'] == 15 )
             <li class="nav-item">
-              <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /pages/layout/top-nav-sidebar.html"
+              <a href="{{route('chatCreate')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Inizia chat Progetto </p>
+              </a>
+            </li>
+            @endif
+            @if($item['id'] == 9 )
+            <li class="nav-item">
+              <a href="{{route('chatCreateFactory')}}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Inizia chat Produttore</p>
+              </a>
+            </li>
+            @endif
+            <li class="nav-item">
+            <a href="{{route('chatIndex')}}"
                 class="nav-link">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Gestione chat</p>
               </a>
             </li>
           </ul>
-        </li>
-        @endif
-        @if ($item['name'] == 'chat_simple' ?? '')
-        <li class="nav-item has-treeview">
-          <a href="file:///Macintosh HD/Users/alessandro/Desktop/Pannello /index2.html" class="nav-link">
-            <i class="nav-icon fas fa-envelope"></i>
-            <p>Chat</p>
-          </a>
-        </li>
-        @endif
-        @if ($item['name'] == 'show_layout' ?? '')
-        <li class="nav-item has-treeview">
-        <a href="{{route('showLayouts')}}" class="nav-link">
-            <i class="nav-icon fas fa-image"></i>
-            <p>Progetto Layout</p>
-          </a>
-        </li>
-        @endif
-        @if ($item['name'] == 'orderStatus' ?? '')
-        <li class="nav-item has-treeview">
-        <a href="{{route('statusOrder')}}" class="nav-link">
-            <i class="nav-icon fas fa-list"></i>
-            <p>Status ordini</p>
-        </a>
-        </li>
-        @endif
-        @if ($item['name'] == 'orderStatusCustomer' ?? '')
-        <li class="nav-item has-treeview">
-        <a href="{{route('statusOrderCustomer')}}" class="nav-link">
-            <i class="nav-icon fas fa-list"></i>
-            <p>Status Ordini</p>
-        </a>
         </li>
         @endif
         @endforeach

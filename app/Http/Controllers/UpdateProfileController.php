@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\models\auth\Group;
 use App\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -63,9 +64,12 @@ class UpdateProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updateView(Group $group)
-    {   
-        $collection = $group->find(Auth::user()->group_id);
-        return view('backoffice.profileDashboard.profile', ['collection' => $collection]);
+    {   try
+        {$collection = $group->find(Auth::user()->group_id);
+        return view('backoffice.profileDashboard.profile', ['collection' => $collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
     
     /**
@@ -75,7 +79,8 @@ class UpdateProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updateCredentialEmail(Request $request, User $user,Group $group){
-        $request->validate($this->rules_credential_email, $this->errorMessages_credential_email);
+        try
+       { $request->validate($this->rules_credential_email, $this->errorMessages_credential_email);
         $user::find($request->newemail);
         if( $user->newemail == null && Hash::check($request->password, Auth::user()->password)){
             
@@ -87,7 +92,10 @@ class UpdateProfileController extends Controller
             return redirect(route('profile'));
         }
         $collection = $group->find(Auth::user()->group_id);
-        return view('backoffice.profileDashboard.profile', ['collection' => $collection,'warning'=>1]);
+        return view('backoffice.profileDashboard.profile', ['collection' => $collection,'warning'=>1]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -97,7 +105,8 @@ class UpdateProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updateCredentialPassword(Request $request, User $user,Group $group){
-        $request->validate($this->rules_credential_password, $this->errorMessages_credential_password);
+        try
+        {$request->validate($this->rules_credential_password, $this->errorMessages_credential_password);
         //dd($request->email , Auth::user()->email, Hash::check($request->password_old, Auth::user()->password) );
         if( $request->email == Auth::user()->email  && Hash::check($request->password_old, Auth::user()->password)){
             
@@ -109,7 +118,10 @@ class UpdateProfileController extends Controller
             return redirect(route('profile'));
         }
         $collection = $group->find(Auth::user()->group_id);
-        return view('backoffice.profileDashboard.profile', ['collection' => $collection,'warning'=>1]);
+        return view('backoffice.profileDashboard.profile', ['collection' => $collection,'warning'=>1]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     //
@@ -120,7 +132,8 @@ class UpdateProfileController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updateProfile(Request $request, User $user,Group $group){
-        $request->validate($this->rules_profile, $this->errorMessages_profile);
+        try
+        {$request->validate($this->rules_profile, $this->errorMessages_profile);
         $user::find(Auth::user()->id);
         $user->exists = true;
         $user->id = (Auth::user()->id);
@@ -130,7 +143,14 @@ class UpdateProfileController extends Controller
         $user->country_user = $request->country_user;
         $user->region_user = $request->region_user;
         $user->city_user = $request->city_user;
+        if ($request->active)
+            $user->active = 1;
+        else
+            $user->active = 0;
         $user->save();
-        return redirect(route('profile'));
+        return redirect(route('profile'));}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 }

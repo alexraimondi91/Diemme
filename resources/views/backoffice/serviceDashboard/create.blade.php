@@ -56,13 +56,13 @@
                                     <div class="col-sm-8">
                                         <!-- checkbox -->
                                         <div class="form-group">
-                                            <label>Servizi abilitati</label>
+                                            <h5>Servizi abilitati</h5>
                                             @if($collection ?? '')
                                             @foreach ($collection as $item)
-                                            <div class="form-check">
-                                                <input name="service[]" value="{{$item->id}}" class="form-check-input"
+                                            <div class="icheck-success">
+                                                <input id="checkboxSuccess{{$item->id}}" name="service[]" value="{{$item->id}}" class="form-check-input"
                                                     type="checkbox">
-                                                <label class="form-check-label">{{$item->name}}</label>
+                                                    <label for="checkboxSuccess{{$item->id}}">{{$item->name}}</label>
                                             </div>
                                             @endforeach
                                             @endif

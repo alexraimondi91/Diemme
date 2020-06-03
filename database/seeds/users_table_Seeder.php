@@ -17,7 +17,7 @@ class users_table_Seeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        for($i=1; $i<=10;$i++)
+        for($i=1; $i<=5;$i++)
         {
             DB::table('users')->insert([
             'id'=>$i,

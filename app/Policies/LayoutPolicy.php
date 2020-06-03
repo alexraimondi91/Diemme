@@ -40,9 +40,10 @@ class LayoutPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function sendToProduction(User $user)
     {
         //
+        return Auth::user()->serviceHave()->where('id','=','12')->count()>=1;
     }
 
     /**
@@ -104,7 +105,10 @@ class LayoutPolicy
      */
     public function show(User $user)
     {
-        return Auth::user()->layout()->count()>=1;
+        if (Auth::user()->layout()->count()>=1)
+            return Auth::user()->layout()->count()>=1;
+        elseif(Auth::user()->serviceHave()->where('id','=','13')->count()>=1)
+            return Auth::user()->serviceHave()->where('id','=','13')->count()>=1;
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\models\auth\Group;
 use App\models\auth\Service;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
@@ -28,9 +29,13 @@ class GroupController extends Controller
      */
     public function index(Request $request,Group $group)
     {
-        $this->authorize('index',$group);
+        try
+        {$this->authorize('index',$group);
         $collection = $group->where('id','!=',4)->paginate(5);
-        return view('backoffice.serviceDashboard.manage', ['collection' => $collection]);
+        return view('backoffice.serviceDashboard.manage', ['collection' => $collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -41,9 +46,13 @@ class GroupController extends Controller
      */
     public function create(Service $service)
     {
-        $this->authorize('create',$service);
+        try
+        {$this->authorize('create',$service);
         $collection = $service->all();
-        return view('backoffice.serviceDashboard.create',['collection'=>$collection]);
+        return view('backoffice.serviceDashboard.create',['collection'=>$collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -54,13 +63,17 @@ class GroupController extends Controller
      */
     public function store(Request $request, Group $group,Service $service)
     {
-        $this->authorize('store',$group);
+        try
+        {$this->authorize('store',$group);
         $request->validate($this->rules,$this->message);
         $group->name = $request->name;
         $group->save();
         $group->services()->attach($request->service);
         $collection = $service->all();
-        return view('backoffice.serviceDashboard.create',['collection'=>$collection,'success'=>1]);
+        return view('backoffice.serviceDashboard.create',['collection'=>$collection,'success'=>1]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -71,12 +84,16 @@ class GroupController extends Controller
      */
     public function updateView(Request $request,Group $group,Service $service)
     {
-        $this->authorize('updateView',$group);
+        try
+        {$this->authorize('updateView',$group);
         $request->validate($this->rules_delete);
         $group = $group::find((int) $request->id);
         $collection = $service->all();
         $active = $group->services()->orderBy('id','asc')->get();
-        return view('backoffice.serviceDashboard.update', ['group' => $group,'collection'=>$collection,'active'=>$active]);
+        return view('backoffice.serviceDashboard.update', ['group' => $group,'collection'=>$collection,'active'=>$active]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -88,13 +105,17 @@ class GroupController extends Controller
      */
     public function update(Request $request, Group $group,Service $service)
     {
-        $this->authorize('update',$group);
+        try
+        {$this->authorize('update',$group);
         $request->validate($this->rules_delete);
         $group = $group::find((int) $request->id);
         $group->services()->sync($request->service);
         $active = $group->services()->get();
         $collection = $service->all();
-        return view('backoffice.serviceDashboard.update',['group' => $group,'collection'=>$collection,'active'=>$active,'success'=>1]);
+        return view('backoffice.serviceDashboard.update',['group' => $group,'collection'=>$collection,'active'=>$active,'success'=>1]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -105,13 +126,17 @@ class GroupController extends Controller
      */
     public function destroy(Request $request,Group $group,Service $service)
     {
-        $this->authorize('destroy',$group);
+        try
+        {$this->authorize('destroy',$group);
         $request->validate($this->rules_delete);
         $group = $group->find((int) $request->id);
         if ($group->id && $request->id!=1 && $request->id!=4)
             $group->services()->detach();
         else return redirect(route('manageGroup'));
         $group->delete();
-        return redirect(route('manageGroup'));
+        return redirect(route('manageGroup'));}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 }

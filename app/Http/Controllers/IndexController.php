@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\models\Index;
 use App\models\Contact;
-
+use Exception;
 
 class IndexController extends Controller
 {
@@ -15,12 +15,16 @@ class IndexController extends Controller
      * @param  \App\models\Index  $index
      * @return \Illuminate\Http\Response
      */
-    public function index(Index $index,Contact $contact)
+    public function index(Index $index, Contact $contact)
     {
         //$collection = $index::all();
-        $collection = $index->orderBy('created_at','desc')
-            ->limit(4)->get();
-        $about = $contact->all();
-        return view('/frontoffice/home/home', ['collection' => $collection,'about'=>$about]);
+        try {
+            $collection = $index->orderBy('created_at', 'desc')
+                ->limit(4)->get();
+            $about = $contact->all();
+            return view('/frontoffice/home/home', ['collection' => $collection, 'about' => $about]);
+        } catch (Exception $e) {
+            abort(404);
+        }
     }
 }

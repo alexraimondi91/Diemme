@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Gestione Layout</h1>
+                    <h1>Gestione Chat</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Gestione Layout</li>
+                        <li class="breadcrumb-item active">Gestione Messaggi</li>
                     </ol>
                 </div>
             </div>
@@ -26,48 +26,51 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Lista Layout</h3>
+                            <h3 class="card-title">Lista Conversazioni</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th style="width: 10px">#</th>
+                                        <th>Cognome</th>
                                         <th>Nome</th>
-                                        <th>Data Creazione</th>
+                                        <th>Tipo</th>
+                                        <th>Progetto</th>
                                         <th>Data Aggiornameto</th>
-                                        <th style="width: 200px">Action</th>
+                                        <th style="width: 40px">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if($collection ?? '')
-                                    @foreach ($collection as $item)
+                                    @if($collection ?? '' )
+                                    @foreach ($collection as $key=>$item)
                                     <tr>
-                                        <td>{{$item->id}}</td>
-                                        <td><a href="{{route('showLayout','id'.'='.$item->id)}}">{{$item->name}}</a></td>
-                                        <td>{{$item->created_at->diffForHumans()}}</td>
+                                        <td>{{$item->surname_user}}</td>
+                                        <td>{{$item->name_user}}</td>
+                                        <td @if($item->group->id == 4) class="bg-primary" @endif>
+                                            {{$item->group->name}}
+                                        </td>
+                                        <td>{{$chats[$key]->subject}}</td>
                                         <td>{{$item->updated_at->diffForHumans()}}</td>
                                         <td>
-                                            <form method="post" action="{{route('rollbackProduct')}}">
+                                            <form method="POST" action="{{route('deleteChat')}}">
                                                 @csrf
-                                                <input name="id" hidden value="{{$item->id}}">
+                                                <input name="id" hidden value="{{$item->pivot->id_chat}}">
                                                 <button type="submit" class="btn btn-danger">
-                                                    Manda indietro ordine
+                                                   Cancella
                                                 </button>
                                             </form>
                                             <hr>
-                                            <form method="post" action="{{route('sendProduct')}}">
-                                                @csrf
-                                                <input name="id" hidden value="{{$item->id}}">
-                                                <button type="submit" class="btn btn-success">
-                                                    Ordine realizzato e in spedizione
+                                            <form method="GET" action="{{route('chatView')}}">
+                                                <input name="id" hidden value="{{$item->pivot->id_chat}}">
+                                                <button type="submit" class="btn btn-primary">
+                                                    Visualizza
                                                 </button>
                                             </form>
                                         </td>
                                     </tr>
                                     @endforeach
-                                    @endif
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -77,6 +80,7 @@
                                 {{$collection->links()}}
                             </ul>
                         </div>
+                        @endif
                     </div>
                     <!-- /.card -->
                 </div>

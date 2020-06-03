@@ -5,7 +5,7 @@
 <body class="hold-transition register-page">
   <div class="register-box">
     <div class="register-logo">
-      <a href="{{route('login')}}"><b>Diemme</b></a>
+      <a href="{{route('index')}}"><b>Diemme</b></a>
     </div>
     <div class="card">
       <div class="card-body register-card-body">
@@ -95,8 +95,8 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input id="password" placeholder="Password" type="password"
-              class="form-control @error('password') is-invalid @enderror" name="password" required
+            <input id="password" placeholder="Password minimo 8 caratteri" type="password"
+              class="form-control @error('password') is-invalid @enderror @error('password.min') is-invalid @enderror " name="password" required
               autocomplete="new-password">
             <div class="input-group-append">
               <div class="input-group-text">
@@ -123,7 +123,7 @@
               <div class="icheck-primary">
                 <input type="checkbox" required id="agreeTerms" name="terms" value="agree">
                 <label for="agreeTerms">
-                  Accetto i <a href="#">termini</a> di registrazione
+                Accetto i <a href="{{route('terms')}}">termini</a> di registrazione
                 </label>
               </div>
             </div>

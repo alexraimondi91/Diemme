@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\models\auth\Group;
 use App\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -56,9 +57,13 @@ class UserManageController extends Controller
      */
     public function index(User $users)
     {
-        $this->authorize('index',$users);
+        try
+        {$this->authorize('index',$users);
         $collection = $users->orderBy('created_at', 'desc')->with('group')->paginate(5);
-        return view('backoffice.userManage.manage', ['collection' => $collection]);
+        return view('backoffice.userManage.manage', ['collection' => $collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -68,9 +73,13 @@ class UserManageController extends Controller
      */
     public function create(User $user,Group $group)
     {
-        $this->authorize($user);
+        try
+        {$this->authorize($user);
         $collection = $group->all();
-        return view('backoffice.userManage.create',['collection'=>$collection]);
+        return view('backoffice.userManage.create',['collection'=>$collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -81,7 +90,8 @@ class UserManageController extends Controller
      */
     public function store(Request $request,User $user,Group $group)
     {
-        $this->authorize('store',$user);
+        try
+        {$this->authorize('store',$user);
         $request->validate($this->rules,$this->message);
         $user->name_user = $request->name_user;
         $user->surname_user = $request->surname_user;
@@ -96,7 +106,10 @@ class UserManageController extends Controller
         $user->active = 1;
         $user->save();
         $collection = $group->all();
-        return view('backoffice.userManage.create',['collection'=>$collection,'success'=>1]);
+        return view('backoffice.userManage.create',['collection'=>$collection,'success'=>1]);}
+        catch(Exception $e){
+            abort(404);
+        }
 
     }
     /**
@@ -107,11 +120,15 @@ class UserManageController extends Controller
      */
     public function updateView(Request $request,User $user,Group $group)
     {
-        $this->authorize('updateView',$user);
+        try
+        {$this->authorize('updateView',$user);
         $request->validate($this->rules_delete);
         $item = $user->find((int)$request->id);
         $collection = $group->all();
-        return view('backoffice.userManage.update',['item'=>$item,'collection'=>$collection]);
+        return view('backoffice.userManage.update',['item'=>$item,'collection'=>$collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -123,7 +140,8 @@ class UserManageController extends Controller
      */
     public function update(Request $request, User $user,Group $group)
     {
-        $this->authorize('update',$user);
+        try
+        {$this->authorize('update',$user);
         $request->validate($this->rules_update);
         $user->id = $request->id;
         $user->exists = true;
@@ -138,7 +156,10 @@ class UserManageController extends Controller
         $user->active = 1;
         $user->save();
         $collection = $group->all();
-        return view('backoffice.userManage.update',['item'=>$user,'collection'=>$collection,'success'=>1]);
+        return view('backoffice.userManage.update',['item'=>$user,'collection'=>$collection,'success'=>1]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -150,10 +171,14 @@ class UserManageController extends Controller
     public function destroy(Request $request,User $user)
     {
         //
-        $this->authorize('destroy',$user);
+        try
+        {$this->authorize('destroy',$user);
         $request->validate($this->rules_delete);
         $user = $user->find((int) $request->id);
         $user->forceDelete();
-        return redirect(route('manageUser'));
+        return redirect(route('manageUser'));}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 }

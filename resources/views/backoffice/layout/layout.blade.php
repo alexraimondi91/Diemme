@@ -17,6 +17,11 @@
   <link rel="stylesheet" href="{{ URL::asset('backoffice/dist/css/adminlte.min.css') }}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ URL::asset('backoffice/plugins/summernote/summernote-bs4.css') }}">
+   <!-- iCheck for checkboxes and radio inputs -->
+   <link rel="stylesheet" href="{{ URL::asset('backoffice/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+   <!-- Select2 -->
+  <link rel="stylesheet" href="{{ URL::asset('backoffice/plugins/select2/css/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ URL::asset('backoffice/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
@@ -98,6 +103,7 @@
     $("#fileC").show()
   }
 </script>
+@yield('js')
 
 </body>
 

@@ -19,7 +19,16 @@
             <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <h4><i class="icon fa fa-exclamation"></i></h4>
-                Aggiornamento avvenuto!File non conforme!
+                Aggiornamento avvenuto!File necessario alla creazione!
+            </div>
+            <!-- warning allert -->
+            @enderror
+            @error('file.*')
+            <!-- warning allert -->
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-exclamation"></i></h4>
+                Aggiornamento non avvenuto!File non conforme!
             </div>
             <!-- warning allert -->
             @enderror
@@ -95,15 +104,20 @@
                                     rows="4"></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="inputClientCompany">ID cliente</label>
-                                <input type="number" id="inputClientCompany" name="user_id" class="form-control"
-                                    value="Deveint Inc">
+                                <label>Sviluppa il progetto con l'utente: </label>
+                                <select name="user_id" class="form-control select2" style="width: 100%;">
+                                    @if($users ?? '')
+                                    @foreach ($users as $user)
+                                <option value="{{$user->id}}">{{$user->name_user}} {{$user->surname_user}} {{$user->fiscalCode_user }}</option>
+                                    @endforeach
+                                    @endif
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputFile">Immagini di Layout</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" onchange="check()" name="file[]" multiple class="custom-file-input"
+                                         <input type="file"  onchange="check()" name="file[]" multiple class="custom-file-input"
                                             id="exampleInputFile">
                                         <label class="custom-file-label" for="exampleInputFile">Scegli i file d'immagine
                                             da caricare</label>

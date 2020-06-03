@@ -15,7 +15,7 @@ class CreateQuotationShowcase extends Migration
     {
         Schema::create('quotation_showcase', function (Blueprint $table) {
             $table->Increments('id');
-            $table->string('name',20);
+            $table->string('name');
             $table->text('description');
             $table->integer('user_id')->unsigned();;
             $table->foreign('user_id')->on('users')->references('id')

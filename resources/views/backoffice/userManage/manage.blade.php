@@ -39,7 +39,8 @@
                                         <th>email</th>
                                         <th>Tipo utente</th>
                                         <th>Data Creazione</th>
-                                        <th>Data Aggiornameto</th>
+                                        <th>Codice Fiscale</th>
+                                        <th>Indirizzo</th>
                                         <th style="width: 40px">Action</th>
                                     </tr>
                                 </thead>
@@ -54,7 +55,8 @@
                                         <td>{{$item->email}}</td>
                                         <td>{{$item->group->name}}</td>
                                         <td>{{$item->created_at->diffForHumans()}}</td>
-                                        <td>{{$item->updated_at->diffForHumans()}}</td>
+                                        <td>{{$item->fiscalCode_user}}</td>
+                                        <td>{{$item->address_user}}, {{$item->region_user}}, {{$item->country_user}}</td>
                                         <td>
                                             <form method="POST" action="{{route('deleteUser')}}">
                                                 @csrf

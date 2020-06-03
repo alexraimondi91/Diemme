@@ -4,12 +4,14 @@ namespace App\Providers;
 
 use App\models\auth\Group;
 use App\models\auth\Service;
+use App\models\Chat;
 use App\models\Contact;
 use App\models\Index;
 use App\models\Layout;
 use App\models\Product;
 use App\models\Quotation;
 use App\models\Technology;
+use App\Policies\ChatPolicy;
 use App\Policies\ContactPolicy;
 use App\Policies\GroupPolicy;
 use App\Policies\IndexPolicy;
@@ -40,7 +42,8 @@ class AuthServiceProvider extends ServiceProvider
         Quotation::class=>QuotationPolicy::class,
         Technology::class=>TechnologyPolicy::class,
         Service::class=>ServicePolicy::class,
-        User::class=>UserManagePolicy::class
+        User::class=>UserManagePolicy::class,
+        Chat::class=>ChatPolicy::class
     ];
 
     /**

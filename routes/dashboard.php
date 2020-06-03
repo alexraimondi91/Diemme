@@ -1,8 +1,4 @@
 <?php
-
-use App\models\Index;
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | Dashboard Routes
@@ -114,7 +110,9 @@ Route::prefix('/layout')->group(function () {
 
     Route::get('/manage','LayoutController@manage')->name('manageLayout');
 
-    Route::view('/create','backoffice.layoutDashboard.create')->name('createLayout')->middleware('can:store,App\models\Layout');
+    Route::get('/create','LayoutController@create')->name('createLayout');
+
+    //Route::view('/create','backoffice.layoutDashboard.create')->name('createLayout')->middleware('can:store,App\models\Layout');
     
     Route::post('/create','LayoutController@store')->name('createLayoutPersist');
 
@@ -179,6 +177,26 @@ Route::prefix('/order')->group(function () {
 
     Route::get('/','LayoutController@orderStateTot')->name('statusOrder');
 
-    Route::get('/status','LayoutController@orderStateSingle')->name('statusOrderCustomer');
+    Route::get('/status','LayoutController@orderStateCustomer')->name('statusOrderCustomer');
+    
+});
+
+Route::prefix('/chat')->group(function () {
+
+    Route::get('/','ChatController@index')->name('chatIndex');
+
+    Route::get('/view','ChatController@view')->name('chatView');
+
+    Route::get('/message/{id}','ChatController@show')->name('chatMessages');
+
+    Route::post('/create','ChatController@store')->name('createChatPersist');
+
+    Route::post('/store/{id}','MessageController@store')->name('storeChatPersist');
+
+    Route::get('/startProject','ChatController@createWithService7')->name('chatCreate');
+
+    Route::get('/startFactory','ChatController@createWithService13')->name('chatCreateFactory');
+
+    Route::post('/delete','ChatController@destroy')->name('deleteChat');
     
 });

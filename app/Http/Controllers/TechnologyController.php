@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\models\Technology;
+use Exception;
 use Illuminate\Http\Request;
 
 class TechnologyController extends Controller
@@ -47,8 +48,12 @@ class TechnologyController extends Controller
      */
     public function index(Technology $technology)
     {
-        $collection = $technology::all();
-        return view('/frontoffice/tecnologie/tecnologie', ['collection' => $collection]);
+        try
+       { $collection = $technology::all();
+        return view('/frontoffice/tecnologie/tecnologie', ['collection' => $collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -59,9 +64,13 @@ class TechnologyController extends Controller
      */
     public function manage(Technology $technology)
     {
-        $this->authorize('manage',$technology);
+        try
+        {$this->authorize('manage',$technology);
         $collection = $technology->orderBy('created_at', 'desc')->paginate(5);
-        return view('backoffice.technologyDashboard.manage', ['collection' => $collection]);
+        return view('backoffice.technologyDashboard.manage', ['collection' => $collection]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -72,12 +81,16 @@ class TechnologyController extends Controller
      */
     public function destroy(Request $request, Technology $technology)
     {
-        $this->authorize('destroy',$technology);
+        try
+        {$this->authorize('destroy',$technology);
         $request->validate($this->rules_delete, $this);
         $technology = $technology->find((int) $request->id);
         if (isset($technology->id))
             $technology->delete();
-        return redirect(route('manageTechnology'));
+        return redirect(route('manageTechnology'));}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -86,9 +99,10 @@ class TechnologyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Technology $technology)
     {
-        $this->authorize('store',$technology);
+        try
+        {$this->authorize('store',$technology);
         $request->validate($this->rules_update, $this->errorMessages_update);
         $technology = new Technology;
         $technology->user_id = Auth::user()->id;
@@ -106,7 +120,10 @@ class TechnologyController extends Controller
                 } else return view('backoffice.technologyDashboard.create', ['warning' => 1]);
             } else return view('backoffice.technologyDashboard.create', ['warning' => 1]);
         }
-        return view('backoffice.technologyDashboard.create', ['warning' => 1]);
+        return view('backoffice.technologyDashboard.create', ['warning' => 1]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
     /**
      * Display the specified resource.
@@ -117,10 +134,14 @@ class TechnologyController extends Controller
      */
     public function updateView(Request $request,Technology $technology)
     {
-        $this->authorize('updateView',$technology);
+        try
+        {$this->authorize('updateView',$technology);
         $request->validate($this->rules_delete);
         $item = $technology::find($request->id);
-        return view('backoffice.technologyDashboard.update', ['item' => $item]);
+        return view('backoffice.technologyDashboard.update', ['item' => $item]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 
     /**
@@ -132,7 +153,8 @@ class TechnologyController extends Controller
      */
     public function update(Request $request, Technology $technology)
     {
-        $this->authorize('update',$technology);
+        try
+        {$this->authorize('update',$technology);
         $request->validate($this->rules, $this->errorMessages);
         $technology = $technology->find((int)$request->id);
         $technology->exists=true;
@@ -153,6 +175,9 @@ class TechnologyController extends Controller
             } else return view('backoffice.technologyDashboard.update', ['warning' => 1,'item' => $technology]);
         }
         $technology->save();
-        return view('backoffice.technologyDashboard.update', ['success' => 1,'item' => $technology]);
+        return view('backoffice.technologyDashboard.update', ['success' => 1,'item' => $technology]);}
+        catch(Exception $e){
+            abort(404);
+        }
     }
 }
